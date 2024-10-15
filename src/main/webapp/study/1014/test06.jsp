@@ -11,12 +11,13 @@
 	<script>
 		'use strict';
 	
-		// idx가 3이면 '/T06' 서블릿 호출, 4이면 post방식으로 'T006'호출 전송, 단 /T06과 T006은 같은 서블릿이(Test06.java)이다
+		// idx가 3이면 '/T06' 서블릿 호출, 4이면 post방식으로 호출
+		// 4이면 post방식으로'T006'호출 전송, 단 /T06과 T006은 같은 서블릿이(Test06.java)이다
 		function fCheck(idx) {
 			if(idx == 3) {location.href='/javaGroup/T06'}
 			else {
-			myform.action = "/javaGroup/T006"
-			myform.submit();
+				myform.action = "/javaGroup/T006"
+				myform.submit();
 			}
 		}
 	</script>

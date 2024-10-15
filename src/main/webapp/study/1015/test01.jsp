@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 
  	지시자(directive) - < % @   % >  : 현 페이지의 환경설정에 관계된 사항처리
- 	스트릿틀릿(scriptlet) - < %   % > : JSP코드 안에서 java 코드를 사용할때 처리
+ 	스크립틀릿(scriptlet) - < %   % > : JSP코드 안에서 java 코드를 사용할때 처리
  	선언문(declaration) - < % !   % > : JSP코드 안에서 java 코드나 메소드의 선언문을 선언할때 기술
  	표현식(expression) - < % =   % > : JSP코드 안에서 값(변수값)을 브라우저에 출력할때 기술
  -->
@@ -22,7 +22,7 @@
 	<%
 		System.out.println("1.이곳은 test1.jsp입니다."); //자바코드사용. 콘솔에 출력됨
 	%>
-	<div>앞의 문장으로 표현식으로 표시</div>
+	<div>앞의 문장을 표현식으로 표시</div>
 	<div><%="2.이곳은 test1.jsp입니다." %></div> <!-- 표현식으로 쓰면 브라우저에 출력됨 -->
 	<%
 		int i = 100;

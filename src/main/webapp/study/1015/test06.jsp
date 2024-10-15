@@ -32,7 +32,7 @@
 <body>
 <p><br/></p>
 <div class="container">
-	<h2>성명과 나이를 입력하세요</h2>
+	<h2>아이디와 비밀번호를 입력하세요</h2>
 	<form name="myform" method="post" action="test06Ok.jsp">
 	<!-- 전송시 : test06Ok.jsp로 보낼 때 서버에 보내짐  -->
 		<div>아이디: 
