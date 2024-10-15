@@ -9,4 +9,43 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+ 
+  <!-- Controller 설정 -->
+  <servlet>
+  	<servlet-name>test06</servlet-name>
+  	<!-- 서블릿 별명=name : 클래스명 복붙+첫글자소문자변경-->
+  	<servlet-class>study.j1014.Test06</servlet-class>
+  	<!-- 서블릿(=클래스)의 패키지명.서블릿이름 -->  	
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test06</servlet-name>  
+  	<url-pattern>/Test06</url-pattern>
+  	<url-pattern>/T06</url-pattern>
+  	<url-pattern>/T006</url-pattern>
+  	<!-- url-pattern:들어가는 경로 -->
+  	<!-- url 패턴마다 코드 설정으로 권한을 따로 줘서 하나의 db의 읽기/쓰기 범위를 따로 줄 수 있음   -->
+  </servlet-mapping>
+  <!-- 1.서블릿으로 범위주기 2.대신할 이름주기 3.url-mapping하기 4.url에 적어주는 이름 5.url설정-->
+  <!-- 동일 내용을 서블릿 작성하지 않음. url 패턴을 추가해서 사용 가능 -->
+  
+  <!-- 
+  <servlet>
+  	<servlet-name>t06</servlet-name>
+  	<servlet-class>study.j1014.Test06</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>t06</servlet-name>  
+  	<url-pattern>/T06</url-pattern>
+  </servlet-mapping>
+   -->
+ 	<!--  
+ 	<servlet>
+  	<servlet-name>t006</servlet-name>
+  	<servlet-class>study.j1014.Test06</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>t006</servlet-name>
+  	<url-pattern>/T006</url-pattern>
+  </servlet-mapping> -->
 </web-app>

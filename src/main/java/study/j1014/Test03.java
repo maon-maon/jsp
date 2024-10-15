@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 @WebServlet({ "/Test3", "/T3" , "/T03"}) //mapping 여러개라서
-public class Test3 extends HttpServlet {
+public class Test03 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("이곳은 Test3 서블릿 파일 입니다.(Get)");

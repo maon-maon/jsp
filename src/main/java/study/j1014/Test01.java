@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/Test1")///Test1로 바로 접속함. 접속 경로다 타고가지 않음
 //@WebServlet : jsp에서의 컨트롤러 : URLmappig 시켜줌=접속경로 숨겨서 보안처리
-public class Test1 extends HttpServlet {
+public class Test01 extends HttpServlet {
 //	HttpServlet을 상속받음= main이 필요 없음. HTTP통신이 연결되면 바로 화면에 뜸. 연결하고 자료받고 끊음. 필요시 다시 요청-연결-끊음
 	private static final long serialVersionUID = 1L;
 	

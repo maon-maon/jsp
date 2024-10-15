@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 @WebServlet({ "/Test4", "/T4" , "/T04"}) //mapping 여러개라서
-public class Test4 extends HttpServlet {
+public class Test04 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
@@ -21,7 +21,7 @@ public class Test4 extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		//브라우저에 출력하기 위함 PrintWriter객체의 변수out에 있는 println을 이용함
-		out.println("<p><a href='/javaGroup/study/1014/test2.jsp'>test2.jsp로 복귀</a></p>");
+		out.println("<p><a href='/javaGroup/study/1014/test02.jsp'>test02.jsp로 복귀</a></p>");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
