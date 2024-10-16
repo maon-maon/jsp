@@ -14,7 +14,7 @@
 <div class="container">
 	<h2>서블릿에서의 호출 수행 순서 확인</h2>
 	<hr/>
-	<form METHOD="post" action="<%=request.getContextPath() %>/1015/Test11Ok">
+	<form method="post" action="<%=request.getContextPath() %>/1015/Test11Ok">
 		<div><button type="button" onclick="location.href='<%=request.getContextPath() %>/1015/Test11Ok'" class="btn btn-success">확인1(get)</button></div>
 		<div><button type="submit" class="btn btn-success">확인2(post)</button></div>
 	</form>

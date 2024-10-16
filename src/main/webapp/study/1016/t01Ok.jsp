@@ -2,7 +2,7 @@
 <%
 	//String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 	//String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
-%>
+%><!-- 값을 받아오지 않아도 t01의 데이터가 res로 연결됨 -->
 <!-- t01Ok.jsp -->
 
 <!-- <script>
