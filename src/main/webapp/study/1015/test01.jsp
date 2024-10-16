@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 
- 	지시자(directive) - < % @   % >  : 현 페이지의 환경설정에 관계된 사항처리
+ 	지시자(directive) - < % @   % >  : page 현 페이지의 환경설정에 관계된 사항처리(page, include, taglib)
  	스크립틀릿(scriptlet) - < %   % > : JSP코드 안에서 java 코드를 사용할때 처리
  	선언문(declaration) - < % !   % > : JSP코드 안에서 java 코드나 메소드의 선언문을 선언할때 기술
  	표현식(expression) - < % =   % > : JSP코드 안에서 값(변수값)을 브라우저에 출력할때 기술

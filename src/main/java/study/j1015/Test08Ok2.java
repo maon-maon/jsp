@@ -23,7 +23,8 @@ public class Test08Ok2 extends HttpServlet {
 		
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
-		// 값이 null이면 ""=공백 을 입력
+		// 값이 null이면 ""=공백 을 입력. mid가 없으면 null이 들어오게 됨
+		// 3항 연산자 :  조건식 ? 참수행 : 거짓수행
 		
 		System.out.println("아이디 : " +mid);
 		System.out.println("비밀번호 : " +pwd);

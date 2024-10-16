@@ -7,7 +7,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>test08.jsp</title>
+  <title>test10.jsp</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -18,7 +18,22 @@
 		if('<%=flag%>' == 'no') alert("회원 정보를 확인하세요");
 		/* 자바의 값을 가져오려고 표현식 사용함. flag에 담긴 값을 비교하여 if문을 처리 
 			 표현식의 비교는 무조건 문자로!!*/
-		
+		function fCheck() {
+			let mid = myform.mid.value;
+			let pwd = myform.pwd.value;
+			
+			if(mid.trim() == "") {
+				alert("아이디를 입력하세요");
+				myform.mid.focus();
+			}
+			else if(pwd.trim() == "") {
+				alert("비밀번호를 입력하세요");
+				myform.pwd.focus();
+			}
+			else {
+				myform.submit();
+			}
+		}
 		
 	</script>
 </head>
@@ -26,17 +41,17 @@
 <p><br/></p>
 <div class="container">
 	<h2>성명과 나이를 입력하세요</h2>
-	<form name="myform" method="post" action="/javaGroup/1015/Test08Ok2">
-	<!-- 경로명 : action="/javaGroup/1015/Test08Ok2" : 현장에선 파일명과 동일하면 안됨 해커의 표적  -->
+	<form name="myform" method="post" action="<%=request.getContextPath() %>/1015/Test10Ok2">
+	<!-- /1015/Test09Ok2는 경로라서 무조건 적어야 함. 홈앱=컨텍스트 이름이 바뀌어도 경로는 변하지 않음  /javaGroupdms 컨텍스트명임
+			 request.getContextPath() :서버에 요청함 서버에 알려둔 컨텍스트명이 있음 /javaGroup를 삭제해도 됨  -->
 		<div>아이디: 
-			<input type="text" id="mid" name="mid" class="form-control mb-2"  autofocus placeholder="아이디를 입력하세요" />
-			<!-- <input type="text" id="mid" name="mid2" class="form-control mb-2"  autofocus placeholder="아이디를 입력하세요" /> -->
+			<input type="text" id="mid" name="mid" value="hkd1234" class="form-control mb-2"  autofocus placeholder="아이디를 입력하세요" />
 		</div>
 		<div>비밀번호: 
-			<input type="password" id="pwd" name="pwd" class="form-control mb-2"  placeholder="비밀번호를 입력하세요"/>
+			<input type="password" id="pwd" name="pwd" value="1234" class="form-control mb-2"  placeholder="비밀번호를 입력하세요"/>
 		</div>
 		<div>
-			<input type="submit" value="전송" class="btn btn-success form-control" />
+			<input type="button" onclick="fCheck()" value="전송" class="btn btn-success form-control" />
 		</div>
 	</form>
 </div>
