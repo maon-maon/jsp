@@ -31,8 +31,8 @@
 				return false;
 			}
 			else {
-				myform.action = "<%=request.getContextPath() %>/1016/T01Ok2";
-				myform.submit();
+				myform.action = "<%=request.getContextPath() %>/1016/T01Ok2"; /* 별도로 경로를 지정했으니 여기로 감.myform의 액션을 무시 */
+				myform.submit(); /* 위에 행이 없으면 myform에 있는 경로:/1016/T01Ok1 여기로 전달됨 */
 			}
 		}
 	</script>

@@ -43,5 +43,5 @@ public class T01Ok2 extends HttpServlet {
 		dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
-	
+	//리퀘스트= 일회성 저장소 dispatcher.forward에서 사용함
 }
