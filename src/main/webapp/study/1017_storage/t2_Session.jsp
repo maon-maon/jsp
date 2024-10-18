@@ -12,13 +12,13 @@
 	<h2>세션 연습 메인 메뉴</h2>
 	<form name="myform" method="post" action="t2_SessionSave.jsp">
 		<div>아이디 : 
-			<input type="text" id="mid" name="mid" value="" class="form-control mb-2" required autofocus placeholder="아이디를 입력하세요" />
+			<input type="text" id="mid" name="mid" value="${sMid}" class="form-control mb-2" required autofocus placeholder="아이디를 입력하세요" />
 		</div>
 		<div>닉네임: 
-			<input type="text" id="nickName" name="nickName" value="" class="form-control mb-2" required placeholder="닉네임을 입력하세요"/>
+			<input type="text" id="nickName" name="nickName" value="${sNickName }" class="form-control mb-2" required placeholder="닉네임을 입력하세요"/>
 		</div>
 		<div>성명: 
-			<input type="text" id="name" name="name" value="" class="form-control mb-2" required placeholder="이름을 입력하세요"/>
+			<input type="text" id="name" name="name" value="${sName }" class="form-control mb-2" required placeholder="이름을 입력하세요"/>
 		</div>
 		<div class="row">			
 			<div class="col"><button type="submit" class="btn btn-success form-control mb-2" >세션저장(post)</button></div>

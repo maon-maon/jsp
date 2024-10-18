@@ -6,6 +6,7 @@
 	session.setAttribute("sMid", request.getParameter("mid"));
 	session.setAttribute("sNickName", request.getParameter("nickName"));
 	session.setAttribute("sName", request.getParameter("name"));
+	
 %>
 <script>
 	alert("세션이 생성/저장되었습니다.");
