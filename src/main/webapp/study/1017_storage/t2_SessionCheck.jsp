@@ -4,7 +4,7 @@
 	String mid = (String) session.getAttribute("sMid");
 	String nickName = (String) session.getAttribute("sNickName");
 	String name = (String) session.getAttribute("sName");
-	/* 저장한 sMid를 get(읽어)서 mdi변수에 저장함 */
+	/* 저장한 sMid를 get(읽어서) mid변수에 저장함 */
 	
 	pageContext.setAttribute("mid", mid); // 위에서 생성한 mid를 "mid"변수에 담음 
 	pageContext.setAttribute("nickName", nickName);

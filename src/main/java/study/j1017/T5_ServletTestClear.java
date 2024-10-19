@@ -15,9 +15,11 @@ import javax.servlet.http.HttpSession;
 public class T5_ServletTestClear extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//세션삭제
 		HttpSession session = request.getSession();		
 		session.invalidate();
 		
+	//어플리케이션삭제
 		ServletContext application = request.getServletContext();
 		application.removeAttribute("aMid");
 		

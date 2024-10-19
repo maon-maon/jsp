@@ -22,6 +22,7 @@
 		표기법 : $ {변수/값/수식/객체}
 	</pre>
 	<hr/>
+	<p>사용할 변수 선언</p>
 <%
 	String atom = "Seoul";
 	String name = "홍길동";
@@ -37,10 +38,12 @@
 		su1 = <%=su1 %><br/>
 		su2 = <%=su2 %><br/>
 		res = <%=res %><br/>
-		su1 * su2 = <%= su1 * su2%><br/>
-		su3 + su4 = <%= su3 + su4%><br/>
+		su1 * su2 = <%= su1 * su2%><br/> <!-- su1 * su2 = 20000 -->
+		su1 +  su2 = <%=su1 + su2 %><br/> <!-- su1 + su2 = 300 -->
+		su3 + su4 = <%= su3 + su4%><br/> <!-- su3 + su4 = 300400 -->
 	</div>
 	<hr/>
+	<p>스크릿틀릿의 값을 EL표기법으로 사용하기 위해</p>
 <%
 	pageContext.setAttribute("atom", atom);
 	pageContext.setAttribute("name", name);
