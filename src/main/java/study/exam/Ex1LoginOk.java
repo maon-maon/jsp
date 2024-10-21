@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
 @WebServlet("/exam/Ex1LoginOk")
@@ -35,8 +36,12 @@ public class Ex1LoginOk extends HttpServlet {
 		
 		
 		// 모든 작업 처리후... 회원 main창으로 보낸다......
+		HttpSession session = request.getSession();
+		session.setAttribute("sMid", mid);
+		
 		request.setAttribute("message", mid+"님 로그아웃 되었습니다.");
-		String viwePage = "/study/exam/ex1_Login.jsp";
+		/* String viwePage = "/study/exam/ex1_Login.jsp"; */
+		String viwePage = "/study/exam/ex1_main.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viwePage);
 		dispatcher.forward(request, response);
 	}
