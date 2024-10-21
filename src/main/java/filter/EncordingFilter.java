@@ -9,7 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter("/*")
+@WebFilter("/*") // ()=필터링 범위. *=전체 지정 
 public class EncordingFilter implements Filter {
 
 	@Override

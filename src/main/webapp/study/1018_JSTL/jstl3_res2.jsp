@@ -36,7 +36,7 @@
 				<td>${vo.address}</td>
 			</tr>
 		</c:forEach>
-		<tr><td colspan="6" class="m-0 p-0"></td></tr>
+		<tr><td colspan="6" class="m-0 p-0"></td></tr> <!-- 마지막줄 선 넣기 -->
 	</table>
 	
 	<div><a href="${ctp}/study/1018_JSTL/jstl3_vo.jsp" class="btn btn-success">돌아가기</a></div>

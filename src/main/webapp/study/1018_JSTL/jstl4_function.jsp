@@ -92,8 +92,18 @@
     6-1.substringBefore() : 찾는 문자 앞의 것만 가져옴<br/>
     ${fn:substringAfter(str, 'o')}<br/>
     ${fn:substringBefore(str, 'o')}<br/>
+    
     6-2.str변수의 2번째 'o'문자의 위치만 구하시오.
     <!-- 셀프완성 -->
+    <c:set var="cnt" value="0" />
+    <c:forEach var="i" begin="0" end="${fn:length(str)-1}">
+    	<c:if test="${fn:substring(str, i, i+1) == 'o'}">
+    		<c:set var="cnt" value="${cnt+1}"/>
+   			<c:if test="${cnt % 2 == 0}">
+   				두 번째 'o'의 위치는 : ${i}
+   			</c:if>
+    	</c:if>
+    </c:forEach>
 		<hr/>
     
     7-1.split함수<br/>
