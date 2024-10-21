@@ -48,4 +48,17 @@
   	<servlet-name>t006</servlet-name>
   	<url-pattern>/T006</url-pattern>
   </servlet-mapping> -->
+  
+  <!-- Filter 처리(한글처리) -->
+  <!-- <filter>
+  	<filter-name>filterTest</filter-name>
+  	<filter-class>filter.FilterTest</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>filterTest</filter-name>
+  	<url-pattern>/*</url-pattern> 모든 파일이 다 필터에 걸리도록 /*을 지정
+  </filter-mapping> -->
+  <!-- 요즘엔 어노테이션방식 사용함 -->
+  
+  
 </web-app>
