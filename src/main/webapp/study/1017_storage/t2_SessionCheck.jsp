@@ -32,6 +32,8 @@
   <jsp:include page="/include/bs4.jsp"/>
 </head>
 <body>
+	<jsp:include page="/include/header.jsp"/>
+  <jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
 	<h2>세션값 출력</h2>
@@ -44,5 +46,6 @@
 	<p><a href="t2_Session.jsp" class="btn btn-info">돌아가기</a></p>
 </div>
 <p><br/></p>
+	<jsp:include page="/include/footer.jsp"/>
 </body>
 </html>

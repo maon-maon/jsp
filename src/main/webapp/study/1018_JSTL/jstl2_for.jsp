@@ -10,6 +10,8 @@
   <jsp:include page="/include/bs4.jsp"/>
 </head>
 <body>
+  <jsp:include page="/include/header.jsp"/>
+  <jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
 	<h2>JSTL 반복문(core라이브러리 사용 : forEach문)</h2>
@@ -151,5 +153,6 @@
 	<br/><br/>
 </div>
 <p><br/></p>
+  <jsp:include page="/include/footer.jsp"/>
 </body>
 </html>

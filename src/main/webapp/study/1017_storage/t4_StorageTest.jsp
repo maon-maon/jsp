@@ -17,6 +17,8 @@
   <jsp:include page="/include/bs4.jsp"/>
 </head>
 <body>
+	<jsp:include page="/include/header.jsp"/>
+  <jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
 	<h2>방문카운트 비교하기</h2>
@@ -33,5 +35,6 @@
 	</p>
 </div>
 <p><br/></p>
+  <jsp:include page="/include/footer.jsp"/>
 </body>
 </html>

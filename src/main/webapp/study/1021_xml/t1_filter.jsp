@@ -24,8 +24,8 @@
 	<form name="myform" method="post" action="">
 		<div><input type="text" name="content" value="간단한 소개글입니다." class="form-control" /></div>
 		<div><textarea rows="5" name="introduce" class="form-control">자기소개 작성...</textarea></div>
-		<div><input type="button" value="전송1" onclick="fCheck('OK')" class="form-control btn btn-success mb-1"></div>
-		<div><input type="button" value="전송2" onclick="fCheck('NO')" class="form-control btn btn-warning mb-1"></div>
+		<div><input type="button" value="전송1(한글set)" onclick="fCheck('OK')" class="form-control btn btn-success mb-1"></div>
+		<div><input type="button" value="전송2(filter)" onclick="fCheck('NO')" class="form-control btn btn-warning mb-1"></div>
 	</form>
 </div>
 <p><br/></p>

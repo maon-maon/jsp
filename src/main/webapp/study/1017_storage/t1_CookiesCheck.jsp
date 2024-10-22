@@ -7,6 +7,8 @@
   <jsp:include page="/include/bs4.jsp"/>
 </head>
 <body>
+	<jsp:include page="/include/header.jsp"/>
+  <jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
 	<h2>저장된 쿠키 확인하기</h2>
@@ -28,5 +30,6 @@
 	<p><a href="t1_Cookies.jsp" class="btn btn-info">돌아가기</a></p>
 </div>
 <p><br/></p>
+	<jsp:include page="/include/footer.jsp"/>
 </body>
 </html>

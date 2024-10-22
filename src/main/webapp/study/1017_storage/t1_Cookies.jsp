@@ -7,6 +7,8 @@
   <jsp:include page="/include/bs4.jsp"/>
 </head>
 <body>
+	<jsp:include page="/include/header.jsp"/>
+  <jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
 	<h2>쿠키 연습 메인 메뉴</h2>
@@ -19,5 +21,6 @@
 	</div>
 </div>
 <p><br/></p>
+  <jsp:include page="/include/footer.jsp"/>
 </body>
 </html>
