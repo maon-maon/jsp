@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -14,16 +13,12 @@
   	$(function() {
   		$("#demo1").hide();
   		$("#demo2").hide();
-  		$("#demo3").hide();
   		
 	  	if('${hap}' != "") {
 	  		$("#demo1").show();
 	  	}
 	  	else if('${gop}' != "") {
 	  		$("#demo2").show();
-	  	}
-	  	else if('${today}' != "") {
-	  		$("#demo3").show();
 	  	}
   	});
   	
@@ -46,9 +41,7 @@
   			location.href = "${ctp}/study2/mapping/Test1";
   		}
   		else if(flag == 4) {
-  			myform.flag.value = flag;
-  			myform.submit();
-  			//location.href = "${ctp}/mapping/Test1Ok?flag=4";
+  			location.href = "${ctp}/mapping/Test1Ok?flag=4";
   		}
 		}
   </script>
@@ -58,7 +51,7 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <h2>이곳은 test1.jsp 입니다.(/WEB-INF/study2/mapping) - URL패턴(directory패턴)</h2>
+  <h2>이곳은 test1.jsp 입니다.(/WEB-INF/study2/mapping)</h2>
   <hr/>
   <div>전송된 메세지 : ${msg}</div>
   <hr/>
@@ -85,13 +78,6 @@
   <div id="demo2">
     <div>두수의 곱 : ${gop}</div>
     <div>두수의 몫 : ${mok}</div>
-  </div>
-  <div id="demo3">
-    <div>전송된 today : ${today}</div>
-    <c:set var="strDate" value="${fn:substring(today, 0, 10)}" />
-    <c:set var="strTime" value="${fn:substring(today, 11, 19)}" />
-    <div>오늘 날짜 : ${strDate}</div>
-    <div>현재시간 : ${strTime}</div>
   </div>
 </div>
 <p><br/></p>
