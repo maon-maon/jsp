@@ -19,6 +19,24 @@ public class Test1Ok extends HttpServlet {
 		int su2 = (request.getParameter("su2")==null || request.getParameter("su2").equals("")) ? 0 : Integer.parseInt(request.getParameter("su2"));
 		String flag = request.getParameter("flag")==null ? "" : request.getParameter("flag");
 		
+//		int hap	= su1 + su2;
+//		int cha	= su1 - su2;
+//		int gop	= su1 * su2;
+//		int mok	= su1 % su2;
+//		
+//		request.setAttribute("su1", su1);
+//		request.setAttribute("su2", su2);
+//		request.setAttribute("flag", flag);
+//
+//		if(flag == 1) {
+//			request.setAttribute("hap", hap);
+//			request.setAttribute("cha", cha);
+//		}
+//		else if(flag == 3) {
+//			request.setAttribute("gop", gop);
+//			request.setAttribute("mok", mok);
+//		}
+		
 		if(flag.equals("1")) {
 			int hap = su1 + su2;
 			int cha = su1 - su2;

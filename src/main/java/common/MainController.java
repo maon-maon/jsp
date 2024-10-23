@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MainController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request , HttpServletResponse response ) throws ServletException, IOException {
-		//공지사랑 DB에서 가져오기
+		//공지사항 DB에서 가져오기
 		
 		String viewPage = "/WEB-INF/main/main.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -26,11 +26,11 @@ public class DoController extends HttpServlet {
 		
 		
 		//1.
+		//String viewPage = "/WEB-INF/study2/mapping/test2.jsp";
 		String viewPage = "/WEB-INF/study2/mapping/";
 		
 		String uri = request.getRequestURI(); //받은 링크의 전체 경로를 식별
 		// 파라메터에서 넘어온 주소를 식별해서 변수uri에 담음
-		
 		System.out.println("uri : " + uri); //uri : /javaGroup/study2/mapping/list.do
 		
 		String com = uri.substring(uri.lastIndexOf("/")+1, uri.lastIndexOf(".")); //변수로 받은 uri를 변수com으로 담음

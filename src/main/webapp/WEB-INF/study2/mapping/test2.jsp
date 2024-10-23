@@ -23,8 +23,8 @@
 <div class="container">
 	<h2>URL패턴(확장자 패턴) - .do</h2>
 	<hr/>
-	<div>전송 메세지 : ${msg}</div>	 <!-- 컨트롤러에서 전송 -->
-	<div>전송 메세지2 : ${msg2}</div>	 <!-- 인터페이스=프론트컨트롤러에서 전송 -->
+	<div>전송 메세지(컨트롤러) : ${msg}</div>	 <!-- 컨트롤러에서 전송 -->
+	<div>전송 메세지2(프론트컨트롤러) : ${msg2}</div>	 <!-- 인터페이스=프론트컨트롤러에서 전송 -->
 	<hr/>
 	<div>
 		<%-- <a href="${ctp}/study2/mapping/list.do" class="btn btn-outline-success mr-3">연습list.do</a> --%> <!-- 디렉토리 사용 -->

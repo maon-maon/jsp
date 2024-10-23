@@ -20,7 +20,6 @@
 <!-- 헤더영역 -->
 <jsp:include page="/include/header.jsp" />
 
-
 <!-- 메뉴바 nav bar -->
 <jsp:include page="/include/nav.jsp" />
 
