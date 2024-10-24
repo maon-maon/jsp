@@ -26,10 +26,11 @@
 			    <div class="dropdown-menu">
 			      <a class="dropdown-item" href="${ctp}/study2/mapping/Test1">mapping 연습(Directory 패턴)</a>
 			      <a class="dropdown-item" href="${ctp}/study2/mapping/Test2">mapping 연습(확장자 패턴)</a>
-			      <a class="dropdown-item" href="${ctp}/study2/test/StorageMenu">Storage연습</a> <!-- 스토리지 호출 컨트롤러 줒 주소로 넣음 -->
+			      <a class="dropdown-item" href="${ctp}/study2/test/StorageMenu">Storage 연습</a> <!-- 스토리지 호출 컨트롤러 줒 주소로 넣음 -->
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/el.jsp">EL연습</a>
 			      <a class="dropdown-item" href="${ctp}/study2/test/JstlMenu">JSTL연습</a> <!-- 컨트롤러(JstlMenu)가 각jstl페이지를 연결 -->
 			      <%-- <a class="dropdown-item" href="${ctp}/study/1018_JSTL/jstlMenu.jsp">JSTL연습</a> --%>
+			      <a class="dropdown-item" href="${ctp}/study2/database/DbList">Database 연습</a> 
 			    </div>
 			  </div>
       </li>    

@@ -55,7 +55,7 @@
 					<!-- <button type="submit" class="btn btn-success  mr-2" >로그인</button> -->
 					<button type="button" onclick="fCheck()" class="btn btn-success  mr-2" >로그인</button>
 					<button type="reset" class="btn btn-warning  mr-2" >다시입력</button>
-					<button type="button" onclick="locaion.href=''" class="btn btn-primary  mr-4" >회원가입</button>
+					<button type="button" onclick="location.href=''" class="btn btn-primary  mr-4" >회원가입</button>
 					<input type="checkbox" name="idSave" checked />아이디 저장
 				</td>
 			</tr>
