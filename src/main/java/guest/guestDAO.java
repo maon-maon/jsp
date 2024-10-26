@@ -93,7 +93,7 @@ public class guestDAO {
 	
 	//방명록에 작성한 글을 DB에 저장시키기
 	public int setGuestInputOk(GuestVO vo) {
-		int res = 0;
+		int res = 0; //값을 뷰에 돌려줄게 아니라서 변수는 반환값인 숫자 타입으로 함. 성공하면 1 /실패하면 0이 자동으로 반환됨
 		try {
 			sql = "insert into guest values(default,?,?,?,?,default,?)";
 			pstmt = conn.prepareStatement(sql);

@@ -15,10 +15,10 @@ public class GuestListCommand2_공부용 implements GuestInterface {
 		guestDAO dao = new guestDAO();
 		
 		 //ArrayList<E> = dao.getGuestList();
-		List<GuestVO> vos = dao.getGuestList();
-		
-		request.setAttribute("vos", vos); 
-		request.setAttribute("guestCnt", vos.size()); //전체글의 갯수를 파악하기 위해 vos의 사이즈 확인 
+//		List<GuestVO> vos = dao.getGuestList();
+//		
+//		request.setAttribute("vos", vos); 
+//		request.setAttribute("guestCnt", vos.size()); //전체글의 갯수를 파악하기 위해 vos의 사이즈 확인 
 		
 	}
 

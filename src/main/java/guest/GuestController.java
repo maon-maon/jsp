@@ -21,11 +21,11 @@ public class GuestController extends HttpServlet {
 		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
 		if(com.equals("/GuestList")) {
-			command = new GuestListCommand(); //인터페이스GuestInterface 안에있는GuestListCommand 커멘드클래스
+			command = new GuestListCommand(); //GuestListCommand를 생성하는데 GuestInterface인터페이스 타입으로 만듦 
 			command.execute(request, response);
 			viewPage +="/guestList.jsp";
 		}
-		else if(com.equals("/GuestInput")) { //뷰만 보이면 됨= 커맨드객체 필요 없음
+		else if(com.equals("/GuestInput")) {  //반환값 없음= 커맨드에서 dao로 접속해 처리할 내용이 없음 //뷰만 보이면 됨= 커맨드객체 필요 없음
 			viewPage +="/guestInput.jsp";
 		}
 		else if(com.equals("/GuestInputOk")) { 

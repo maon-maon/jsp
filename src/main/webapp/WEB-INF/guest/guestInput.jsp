@@ -45,7 +45,7 @@
     	<button type="reset" class="btn btn-outline-warning mr-3">다시입력</button>
     	<button type="button" onclick="location.href='GuestList.gu'" class="btn btn-outline-dark">돌아가기</button>
     </div>
-    <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" />
+    <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" /> <!-- remoteAddr:클라이언트 아이피 표시 명령어 -->
   </form>
 </div>
 <p><br/></p>
