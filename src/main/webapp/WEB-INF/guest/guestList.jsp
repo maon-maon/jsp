@@ -18,7 +18,7 @@
   <script>
   	'use strict';
   	function deleteCheck(idx) {
-		 let ans = confirm("현 방명록 삭제");
+		 let ans = confirm("현 방명록 삭제"); /* confirm() 함수사용. 알림창의 확인을 누르면 ans 변수에 true가, 취소를 누르면 false가 저장 */
 		 if(ans) location.href = "GuestDeleteOk.gu?idx="+idx;
 	}
   </script>
