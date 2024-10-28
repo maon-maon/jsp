@@ -65,6 +65,9 @@ public class guestDAO {
 	public List<GuestVO> getGuestList(int startIndexNo, int pageSize) {
 		List<GuestVO> vos = new ArrayList<GuestVO>();
 		try {
+//			sql = "select * from guest order by idx desc";
+//			pstmt = conn.prepareStatement(sql);
+//			rs = pstmt.executeQuery();
 			sql = "select * from guest order by idx desc limit ?, ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
@@ -129,7 +132,7 @@ public class guestDAO {
 	}
 
 	
-		//현재 방명록의 전체 글의 개수
+		//현재 방명록(=DB에 저장된)의 전체 글의 개수
 	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {

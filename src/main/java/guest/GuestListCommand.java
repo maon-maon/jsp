@@ -11,6 +11,15 @@ public class GuestListCommand implements GuestInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		//데이터베이스 바로 연동해서 가져오기
+//		GuestDAO dao = new GuestDAO();
+//		
+//		List<GuestVO> vos = dao.getGuestList();
+//		//System.out.println(vos+"여기까지");
+//		request.setAttribute("vos", vos);
+//		request.setAttribute("guestCnt", vos.size());
+		
+		
 		guestDAO dao = new guestDAO();
 		
 		//페이징처리
@@ -22,7 +31,7 @@ public class GuestListCommand implements GuestInterface {
 		int pageSize = request.getParameter("pageSize")==null ? 3 : Integer.parseInt(request.getParameter("pageSize")); 
 		
 		// 3. 총 레코드 건수를 구한다(totRecCnt) -sql명령어 중 count함수 이용
-		int totRecCnt = dao.getTotRecCnt(); //dao에서 값을 가져옴 sql이라서
+		int totRecCnt = dao.getTotRecCnt(); //DB에 저장되어 있는 총 레코드 건수를 확인. dao에서 값을 가져옴 sql이라서
 		
 		// 4. 총 페이지 건수를 구한다ㅣ(totPage)
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize)+1;
