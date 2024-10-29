@@ -48,13 +48,27 @@ public class MemberDAO {
 	}
 	
 	//Member테이블에서 아이디 검색하기
-	public MemberVO MemberIdCheck(String mid) {
+	//아이디 중복 확인
+	//닉네임 중복 확인
+	public MemberVO getMemberIdCheck(String str) {
+	//public MemberVO getMemberIdCheck(String mid) {
 		vo = new MemberVO();
 		
 		try {
-			sql = "select * from member where mid = ?";
+			int sw = 0;
+			if(str.indexOf("_nickName") != -1) {
+				str = str.substring(0, str.indexOf("_nickName"));
+				sw =1;
+			}
+			
+			if(sw == 0) {
+				sql = "select * from member where mid = ?";
+			}
+			else {
+				sql = "select * from member where nickName = ?";
+			}
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mid);
+			pstmt.setString(1, str);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -78,7 +92,7 @@ public class MemberDAO {
 				vo.setTodayCnt(rs.getInt("todayCnt"));
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
-				vo.setSalt(rs.getString("salt"));
+				//vo.setSalt(rs.getString("salt"));
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류: "+e.getMessage());
@@ -101,6 +115,53 @@ public class MemberDAO {
 		} finally {
 			pstmtClose();
 		}	
+	}
+	
+	// 회원 가입 처리
+	public int setMemberJoinOk(MemberVO vo) {
+		int res = 0;
+		try {
+			sql = "insert into member values(default,?,?,?,?,?,?,?,?,?,?,?,?,default,default,default,default,default,default,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getPwd());
+			pstmt.setString(3, vo.getNickName());
+			pstmt.setString(4, vo.getName());
+			pstmt.setString(5, vo.getGender());
+			pstmt.setString(6, vo.getBirthday());
+			pstmt.setString(7, vo.getTel());
+			pstmt.setString(8, vo.getAddress());
+			pstmt.setString(9, vo.getEmail());
+			pstmt.setString(10, vo.getContent());
+			pstmt.setString(11, vo.getPhoto());
+			pstmt.setString(12, vo.getUserInfo());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+			pstmtClose();
+		}	
+		return res;
+	}
+	
+	// 닉네임 체크
+	public MemberVO getMemberNickNameCheck(String nickName) {
+		vo = new MemberVO();
+		
+		try {
+			sql = "select * from member where nickName = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickName);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			vo.setName(rs.getString("nickName"));
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+			rsClose();
+		}	
+		return vo;
 	}
 	
 	

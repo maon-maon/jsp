@@ -61,6 +61,10 @@
       	<c:if test="${empty sNickName}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if>
       	<%-- <c:if test="${sNickName = null}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if> --%>
       	<%-- 개인 작업물<c:if test="${sNickName == 'midOk'}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if> --%>
+      </li>  
+           
+      <li class="nav-item">
+      		<c:if test="${empty sNickName}"><a class="nav-link" href="MemberJoin.mem">Join</a></c:if>
       </li>       
     </ul>
   </div>  

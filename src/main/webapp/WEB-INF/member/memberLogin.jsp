@@ -21,15 +21,16 @@
 	<h2 class="text-center">회 원 로 그 인</h2>
 	<form name="myform" method="post" action="MemberLoginOk.mem">
 		<div>아이디 : 
-			<input type="text" id="mid" name="mid" value="admin" class="form-control mb-2" required autofocus placeholder="아이디를 입력하세요" />
+			<input type="text" id="mid" name="mid" value="${cookieMid}" class="form-control mb-2" required autofocus placeholder="아이디를 입력하세요" />
 		</div>
 		<div>비밀번호: 
-			<input type="password" id="pwd" name="pwd" value="asdf1234" class="form-control mb-2" required placeholder="비밀번호를 입력하세요"/>
+			<input type="password" id="pwd" name="pwd" value="" class="form-control mb-2" required placeholder="비밀번호를 입력하세요"/>
 		</div>
 		<div class="row text-center">
       <div class="col"><button type="submit" class="btn btn-outline-success form-control mb-2" >로그인</button></div>
       <div class="col"><button type="reset" class="btn btn-outline-warning form-control mb-2" >다시입력</button></div>
-      <div class="col"><button type="button" onclick="location.href='${ctp}/'" class="btn btn-outline-primary form-control" >돌아가기</button></div>
+      <div class="col"><button type="button" onclick="location.href='${ctp}/'" class="btn btn-outline-primary form-control">돌아가기</button></div>
+      <div class="col"><button type="button" onclick="location.href='MemberJoin.mem'" class="btn btn-outline-secondary form-control" >회원가입</button></div>
     </div>
 	</form>
 </div>

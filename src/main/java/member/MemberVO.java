@@ -21,7 +21,10 @@ public class MemberVO {
 	private int todayCnt;
 	private String startDate;
 	private String lastDate;
-	private String salt;
+	
+	private String tempMid; //아이디 중복체크를 위한 임시아이디
+	//1.변수추가 2.toString삭제 3.겟셋추가
+	private String tempnickName;
 	
 	public int getIdx() {
 		return idx;
@@ -143,11 +146,17 @@ public class MemberVO {
 	public void setLastDate(String lastDate) {
 		this.lastDate = lastDate;
 	}
-	public String getSalt() {
-		return salt;
+	public String getTempMid() {
+		return tempMid;
 	}
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setTempMid(String tempMid) {
+		this.tempMid = tempMid;
+	}
+	public String getTempnickName() {
+		return tempnickName;
+	}
+	public void setTempnickName(String tempnickName) {
+		this.tempnickName = tempnickName;
 	}
 	
 	@Override
@@ -156,6 +165,7 @@ public class MemberVO {
 				+ ", gender=" + gender + ", birthday=" + birthday + ", tel=" + tel + ", address=" + address + ", email=" + email
 				+ ", content=" + content + ", photo=" + photo + ", level=" + level + ", userInfo=" + userInfo + ", userDel="
 				+ userDel + ", point=" + point + ", visitCnt=" + visitCnt + ", todayCnt=" + todayCnt + ", startDate="
-				+ startDate + ", lastDate=" + lastDate + ", salt=" + salt + "]";
+				+ startDate + ", lastDate=" + lastDate + ", tempMid=" + tempMid + ", tempnickName=" + tempnickName + "]";
 	}
+	
 }

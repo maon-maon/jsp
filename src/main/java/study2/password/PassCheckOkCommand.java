@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.SecurityUtil;
 import study2.StudyInterface;
 
 public class PassCheckOkCommand implements StudyInterface {
@@ -22,13 +23,15 @@ public class PassCheckOkCommand implements StudyInterface {
 		else if(flag == 2) temp = "문자 비밀번호";
 		else if(flag == 3) temp = "숫자/문자 비밀번호";
 		
-		System.out.println("원본자료 : ");
-		System.out.println("flag : " + flag);
-		System.out.println("mid : " + mid);
-		System.out.println("pwd : " + pwd);
+//		System.out.println("원본자료 : ");
+//		System.out.println("flag : " + flag);
+//		System.out.println("mid : " + mid);
+//		System.out.println("pwd : " + pwd);
 		
 		int salt = 0x1234ABCD;
 		int encPwd = 0, decPwd;
+		String strEncPwd = "";
+		
 		if(flag == 1) {
 			// salt 키 : 0x1234ABCD  //0x : 16진수로 인식
 			
@@ -44,14 +47,19 @@ public class PassCheckOkCommand implements StudyInterface {
 			System.out.println("디코딩(복호화)된 비밀번호 : " + decPwd);
 			System.out.println("복호화 비밀번호와 입력비밀번호가 같으면 로그인 OK!!");
 			System.out.println("~~~~~~~~~~~~~~~~~");
+			
+			request.setAttribute("pwd", encPwd);
+		}
+		else if(flag == 4) {
+			SecurityUtil security = new SecurityUtil(); //자바는 사용하려면 생성
+			strEncPwd =  security.encryptSHA256(pwd); //앞에서 받은 pwd 넘김. string타입으로 
+			request.setAttribute("pwd", strEncPwd);
 		}
 		else if(flag == 2) {
 		//입력받은 문자를 아스키코드화 시켜서 연산 ->>계산->>아스키코드문자화
-			
-		//내일 보여주고 끝. 알아서 공부
+		//내일 보여주고 끝. 셀프 스터디
 		}
 		
-		request.setAttribute("pwd", encPwd);
 
 	}
 }
