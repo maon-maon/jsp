@@ -33,6 +33,6 @@ insert into member values(default,'admin','asdf1234','관리맨','관리자','�
 
 -- delete from member where idx = 2;
 
-alter table 
+alter table member auto_increment = 10;
 
 
