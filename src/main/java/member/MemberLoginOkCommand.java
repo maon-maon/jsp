@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.fabric.xmlrpc.base.Data;
+import com.mysql.fabric.xmlrpc.base.Struct;
 
 import common.SecurityUtil;
 
@@ -42,6 +43,10 @@ public class MemberLoginOkCommand implements MemberInterface {
 			return; //아이디에 맞는 비번이 공백이면 여기서 if종료하고 이 페이지 실행종료
 		}
 		
+		//241030----------------------------------------
+		// 이곳부터는 로그인 처리가 된 회원들의 작업내열들 입력처리입니다. 
+		
+		
 		// 동일한 아이디가 검색되었다면 비밀번호가 맞는지 확인한다.
 		// 입력받은 비밀번호를 암호화 시켜서 DB에 암호화 되어 저장되어 있는 비밀번호와 비교한다.
 		
@@ -58,13 +63,46 @@ public class MemberLoginOkCommand implements MemberInterface {
 		// 세션:처리완료된 자료들은  작업수행이 지속되는 동안 꼭 필요한 정보만을 세션에 저장처리 
 		/* 원래는 상기의 내용을 처리해야 함*/
 		
+	// 쿠키:아이디를 쿠키로 저장처리 
+			String idSave = request.getParameter("idSave")==null ? "off" : "on";
+			//System.out.println("idSave :"+idSave);
+			Cookie cookieMid = new Cookie("cMid", mid);
+			cookieMid.setPath("/");
+			if(idSave.equals("on")) {
+				cookieMid.setMaxAge(60*60*24*7);
+			}
+			else {
+				cookieMid.setMaxAge(0);
+			}
+			response.addCookie(cookieMid);
+			//System.out.println("cookieMid : " + cookieMid);
+			//System.out.println("cookieMid2 : " + cookieMid.getValue());
+			
 		
+		
+	//세션에 저장할 항목 : mid, nickName //DB에서 꺼내기 번거로운것 세션에 저장해서 사용
+		HttpSession session = request.getSession();
+		/*session.setAttribute("sMid", "midOk"); //네비바 수정 개인작업*/
+		session.setAttribute("sMid", mid);
+		session.setAttribute("sNickName",vo.getNickName());
+		session.setAttribute("sLevel",vo.getLevel());
+	//241030
+		session.setAttribute("sLastDate", vo.getLastDate());//최근 방문일을 세션에 담아둔다.
+			
+		// 회원 등급별 등급명칭을 strLevel변수에 저장한다.
+		String strLevel = "";
+		if(vo.getLevel() == 0) strLevel = "관리자";
+		if(vo.getLevel() == 1) strLevel = "준회원";
+		if(vo.getLevel() == 2) strLevel = "정회원";
+		if(vo.getLevel() == 3) strLevel = "우수회원";
+		session.setAttribute("strLevel", strLevel);
+			
 		// 방문 포인트 10증가, 방문 카운트(총/오늘) 1증가, 마지막날짜(최종방문일자) 수정 
 	//241029
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String strToday = sdf.format(today);
-		
+
 		if(!strToday.equals(vo.getLastDate().substring(0,10))) {
 			// 오늘 처음 방문한 경우 수행처리(오늘빙문카운트를 1로하고, 기존 포인트+10)
 			vo.setTodayCnt(1); //처음 로그인시 리셋이니까 방문은1
@@ -75,29 +113,12 @@ public class MemberLoginOkCommand implements MemberInterface {
 			vo.setTodayCnt(vo.getTodayCnt()+1);
 			if(vo.getTodayCnt() <= 5) vo.setPoint(vo.getPoint() + 10);
 		}
-		
-		
-		
-		
-	// 쿠키:아이디를 쿠키로 저장처리 
-		Cookie cookieMid = new Cookie("cMid", mid);
-		cookieMid.setMaxAge(60*60*24*7);
-		response.addCookie(cookieMid);
-		
-		
-		
+				
 		
 		//dao.setPointPlus(mid); //방문포인트를 5회 미만일 경우에 10point씩 증가처리
+		//241030
+		dao.setMemberInfoUpdate(vo);
 		
-		
-		
-		
-		
-		//세션에 저장할 항목 : mid, nickName //DB에서 꺼내기 번거로운것 세션에 저장해서 사용
-		HttpSession session = request.getSession();
-		/*session.setAttribute("sMid", "midOk"); //네비바 수정 개인작업*/
-		session.setAttribute("sMid", "mid");
-		session.setAttribute("sNickName",vo.getNickName());
 		
 		request.setAttribute("message", mid+"님 로그인되었습니다.");
 		request.setAttribute("url", "MemberMain.mem");

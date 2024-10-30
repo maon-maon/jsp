@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import common.GetConn;
 
@@ -53,7 +54,7 @@ public class MemberDAO {
 	public MemberVO getMemberIdCheck(String str) {
 	//public MemberVO getMemberIdCheck(String mid) {
 		vo = new MemberVO();
-		
+		//System.out.println("getMemberIdCheck str:"+str);
 		try {
 			int sw = 0;
 			if(str.indexOf("_nickName") != -1) {
@@ -162,6 +163,63 @@ public class MemberDAO {
 			rsClose();
 		}	
 		return vo;
+	}
+	
+	// 방문시 업데이트할 내영 처리
+	public void setMemberInfoUpdate(MemberVO vo) {
+		try {
+			sql = "update member set point=?, visitCnt=visitCnt+1, todayCnt=?, lastDate=now() where mid = ?"; //
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getPoint());
+			pstmt.setInt(2, vo.getTodayCnt());
+			pstmt.setString(3, vo.getMid());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+			pstmtClose();
+		}	
+		
+	}
+	
+	// 전체 회원 리스트 처리
+	public ArrayList<MemberVO> getMemberList() {
+		ArrayList<MemberVO> vos = new ArrayList<>();
+		try {
+			sql = "select * from member order by idx desc";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				vo = new MemberVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setName(rs.getString("name"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setTel(rs.getString("tel"));
+				vo.setAddress(rs.getString("address"));
+				vo.setEmail(rs.getString("email"));
+				vo.setContent(rs.getString("content"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setLevel(rs.getInt("level"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
+				vo.setPoint(rs.getInt("point"));
+				vo.setVisitCnt(rs.getInt("visitCnt"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setLastDate(rs.getString("lastDate"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+			rsClose();
+		}	
+		return vos;
 	}
 	
 	

@@ -28,7 +28,7 @@ public class GetConn {
 	private GetConn() {
 		try {
 			Class.forName(driver);
-			System.out.println("드라이버 검색 성공");
+			//System.out.println("드라이버 검색 성공");
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 검색 실패: " +e.getMessage());

@@ -109,7 +109,7 @@
 <%
 	String name2 = request.getParameter("name")==null ? "" : request.getParameter("name");
 	String hobby = request.getParameter("hobby")==null ? "" : request.getParameter("hobby");
-	System.out.println("hobby2 : " +hobby );
+	//System.out.println("hobby2 : " +hobby );
 	
 	if(!name2.equals("") && (!hobby.equals(""))) {
 %>

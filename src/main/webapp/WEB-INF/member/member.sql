@@ -35,4 +35,4 @@ insert into member values(default,'admin','asdf1234','관리맨','관리자','�
 
 alter table member auto_increment = 10;
 
-
+select max(point) as point, mid,name from member
