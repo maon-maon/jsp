@@ -37,6 +37,7 @@
     	let nickName = myform.nickName.value;
     	let name = myform.name.value;
     	
+    	// split분리시 공백이 있어야 배열로 분리되어 들어감
     	let tel2 = myform.tel2.value.trim();
     	let tel3 = myform.tel3.value.trim();
     	if(tel2 == "") tel2 = " ";
@@ -44,7 +45,7 @@
     	
     	let tel = myform.tel1.value + "-" + tel2 + "-" + tel3;
     	let email = myform.email1.value + "@" + myform.email2.value;
-    	let address = myform.postcode.value+" /"+myform.address.value+" /"+myform.detailAddress.value+" /"+myform.extraAddress.value;
+    	let address = myform.postcode.value+" /"+myform.address.value+" /"+myform.detailAddress.value+" /"+myform.extraAddress.value +" ";
     	
     	if(!regMid.test(mid)) {
     		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
@@ -66,8 +67,8 @@
         myform.name.focus();
         return false;
       }
+    	
 			// 이메일 주소형식체크
-			
 			// 전화번호 형식 체크
     	
     	myform.tel.value = tel;
@@ -89,8 +90,8 @@
   		myform.email.value = email;
   		myform.tel.value = tel;
   		myform.address.value = address;
-  		//myform.submit();
-    	
+  		
+  		//myform.submit(); //onsubmit은 리턴값 받아서 전송함. 여기서 바로 전송하면 안 됨
     }
     
     // 아이디 중복체크

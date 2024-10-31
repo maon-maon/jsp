@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
+<script>
+	function memberDelete() {
+		let ans = confirm("탈퇴 하시겠습니까?");
+		if(ans) location.href = "MemberPwdDeleteCheck.mem";
+	}
+</script>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <%-- <a class="navbar-brand" href="${ctp}/">Home</a> --%>
   <a class="navbar-brand" href="http://192.168.50.52:9090/javaGroup">Home</a>
@@ -46,15 +52,15 @@
 				    </button>
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="MemberMain.mem">회원메인방</a>
-				      <a class="dropdown-item" href="MemberUpdate.mem">회원정보수정</a>
+				      <a class="dropdown-item" href="MemberPasswordCheck.mem">회원정보수정</a>
 				      <a class="dropdown-item" href="javascript:memberDelete()">회원탈퇴</a> 
-				      <c:if test="${sLevel > 1}">
+				      <c:if test="${sLevel > 1 || sLevel == 0}">
 					      <a class="dropdown-item" href="MemberList.mem">회원리스트</a>
 					      <a class="dropdown-item" href="">쪽지보내기</a>
 					      <a class="dropdown-item" href="">일정관리</a>
 				      </c:if>
 				      <a class="dropdown-item" href="">포인트 사용 내역</a>
-				      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="#">관리자메뉴</a></c:if>
+				      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="AdminMain.ad">관리자메뉴</a></c:if>
 				    </div>
 				  </div>
 	      </li>

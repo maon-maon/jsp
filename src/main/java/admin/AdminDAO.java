@@ -1,4 +1,4 @@
-package study2;
+package admin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import common.GetConn22;
 import common.GetConn;
 import member.MemberVO;
 
-public class StudyDAO {
+public class AdminDAO {
 	private Connection conn = GetConn.getConn(); //이 안에 생상된 getInstance를 연결
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;

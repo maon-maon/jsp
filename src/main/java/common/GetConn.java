@@ -44,5 +44,5 @@ public class GetConn {
 	public static Connection getConn() { // conn의 getter로서 필드의 conn을 읽어서 static으로 메모리에 올리고, 리턴값으로 메모리의 conn을 전달
 		return conn;
 	}
-	
+
 }

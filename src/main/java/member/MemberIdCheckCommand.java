@@ -15,9 +15,7 @@ public class MemberIdCheckCommand implements MemberInterface {
 		MemberDAO dao = new MemberDAO();
 		
 		MemberVO vo = dao.getMemberIdCheck(mid);
-//		if(vo.getMid() == null ) {
-//			vo.setTempMid(mid);
-//		}
+
 		if(vo.getMid() != null && !vo.getMid().equals("")) vo.setTempMid(mid);
 		else vo.setMid(mid);
 		

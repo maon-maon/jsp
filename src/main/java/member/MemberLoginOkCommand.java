@@ -14,6 +14,7 @@ import com.mysql.fabric.xmlrpc.base.Data;
 import com.mysql.fabric.xmlrpc.base.Struct;
 
 import common.SecurityUtil;
+import guest.guestDAO;
 
 public class MemberLoginOkCommand implements MemberInterface {
 
@@ -89,14 +90,12 @@ public class MemberLoginOkCommand implements MemberInterface {
 	//241030
 		session.setAttribute("sLastDate", vo.getLastDate());//최근 방문일을 세션에 담아둔다.
 			
-		// 회원 등급별 등급명칭을 strLevel변수에 저장한다.
-		String strLevel = "";
-		if(vo.getLevel() == 0) strLevel = "관리자";
-		if(vo.getLevel() == 1) strLevel = "준회원";
-		if(vo.getLevel() == 2) strLevel = "정회원";
-		if(vo.getLevel() == 3) strLevel = "우수회원";
-		session.setAttribute("strLevel", strLevel);
 			
+		//241031
+		// 회원등급별 등급명칭을 strLevel변수에 저장한다.(자동등업에서도 사용하기에 메소드처리했다.)
+		String strLevel = strLevelProcess(vo.getLevel());
+		session.setAttribute("strLevel", strLevel);
+		
 		// 방문 포인트 10증가, 방문 카운트(총/오늘) 1증가, 마지막날짜(최종방문일자) 수정 
 	//241029
 		Date today = new Date();
@@ -120,8 +119,38 @@ public class MemberLoginOkCommand implements MemberInterface {
 		dao.setMemberInfoUpdate(vo);
 		
 		
-		request.setAttribute("message", mid+"님 로그인되었습니다.");
-		request.setAttribute("url", "MemberMain.mem");
 		
+		//241031
+	// 준회원인경우 정회원으로 자동등업처리(조건:총방문회수 10회이상, 방명록글수 2개이상)
+		
+			int levelSw = 0;
+			if(vo.getLevel() == 1) { //준회원일때만 하애릐 내용을 처리
+				guestDAO gDao = new guestDAO();
+				vo = dao.getMemberIdCheck(mid);
+				if(vo.getVisitCnt() >= 10 && gDao.getGuestCnt(mid, vo.getName(), vo.getNickName()) >= 2) {//<!-- 방명록 작성자의 이름/닉네임/아이디으로 검색 -->
+					dao.setMemberLevelUpdate(vo.getIdx(), 2); //고유번호와 등업시킬레벨을 전송 =>강제로 정회원으로 등업
+					session.setAttribute("sLevel", 2);
+					session.setAttribute("strLevel", strLevelProcess(2));
+					levelSw = 1;
+				}
+			}
+			if(levelSw != 0) request.setAttribute("message", mid + "님 축하합니다.\\n정회원이 되셨습니다.");
+			else request.setAttribute("message", mid + "님 로그인 되었습니다.");
+		
+			//request.setAttribute("message", mid+"님 로그인되었습니다.");
+			request.setAttribute("url", "MemberMain.mem");
+	}
+
+	
+	//241031
+	// 서버에서 가져온 레벨 숫자를 문자로 변환해서 리턴해줌
+	private String strLevelProcess(int level) {
+	// 회원 등급별 등급명칭을 strLevel변수에 저장한다.
+		String strLevel = "";
+		if(level == 0) strLevel = "관리자";
+		else if(level == 1) strLevel = "준회원";
+		else if(level == 2) strLevel = "정회원";
+		else if(level == 3) strLevel = "우수회원";
+		return strLevel;
 	}
 }
