@@ -9,9 +9,11 @@
   <title>memberList(admin).jsp</title>
   <jsp:include page="/include/bs4.jsp"/>
 <style>
+	body {
+		font-size: 0.8em;
+	}
 	th {
 		text-align: center;
-		background-color: #eee;
 	}
 </style>
 <script>
@@ -48,16 +50,45 @@
 			}
 		});
 	}
+	
+	// 등급별 조회
+	function levelViewCheck() {
+		let level = document.getElementById("levelView").value;
+		// 전체변경=전부보내기  부분변경=ajax : 전체 처리는 커맨드에서 처리하고 돌아오는게 나음
+	 location.href="MemberList.ad?level="+level;			
+	}
+	
+	// 사용자 페이지 설정
+	function pageSizeCheck() {
+		let pageSize = document.getElementById("pageSize").value;
+		location.href="MemberList.ad?pageSize="+pageSize;			
+	}
 </script>
 </head>
 <body>
+	<jsp:include page="/include/header.jsp"/>
 <p><br/></p>
 <div class="container">
 	<h2 class="text-center">회 원 리 스 트</h2>
+	<table class="table table-borderless">
+		<tr class="text-right">
+			<td>
+				<select name="levelView" id="levelView" onchange="levelViewCheck()"> <!-- onchange:선택이 바뀌면 변화 -->
+					<option value=""   <c:if test="${empty level}">selected</c:if> >전체회원</option>
+					<option value="1"  <c:if test="${level == 1}">selected</c:if> >준회원</option>
+					<option value="2"  <c:if test="${level == 2}">selected</c:if> >정회원</option>
+					<option value="3"  <c:if test="${level == 3}">selected</c:if> >우수회원</option>
+					<option value="99" <c:if test="${level == 99}">selected</c:if> >탈퇴신청회원</option>
+					<option value="0"  <c:if test="${level == 0}">selected</c:if> >관리자</option>
+				</select>
+			</td>
+		</tr>
+	</table>
 	
 	<!-- 테이블로 출력 -->
 	<table class="table tqble-bordered">
-		<tr>
+		<tr class="table-info">
+		<!-- <tr class="table-info"> -->
 			<th>번 호</th>
 			<th>닉네임</th>
 			<th>아이디</th>
@@ -75,7 +106,7 @@
 				<%-- <td class="text-center"> $ { st.count}</td> --%>
 				<td>${vo.idx}</td>
 				<td>${vo.nickName}</td>
-				<td>${vo.mid}</td>
+				<td><a href="MemberDeteilView.ad?idx=${vo.idx}">${vo.mid}</a></td>
 				<td>${vo.name}</td>
 				<td>${vo.gender}</td>
 				<td>${fn:substring(vo.birthday,0,10)}</td>
@@ -86,7 +117,8 @@
 				</td>
 				<td>
 					<c:if test="${vo.userDel == 'NO'}">활동중</c:if>
-					<c:if test="${vo.userDel != 'NO'}"><font color="red">탈퇴신청중</font></c:if>
+					<!-- 241101 -->
+					<c:if test="${vo.userDel != 'NO'}"><font color="red">탈퇴신청중</font>(${vo.elapesed_date})</c:if>
 				</td>
 				<td>
 					<select name="level" id="level" onchange="levelChange(this)" >
@@ -100,8 +132,38 @@
 				<td>${vo.userInfo}</td>
 			</tr>
 		</c:forEach>
-		<tr><td colspan="8" class="m-0 p-0"></td></tr>
+		<tr><td colspan="10" class="m-0 p-0"></td></tr>
 	</table>
+	
+	<!-- 사용자 페이지 설정 241101 -->
+	<table class="table table-borderless">
+		<tr class="">
+			<td>
+				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()"> 
+					<option <c:if test="${pageSize == 3}">selected</c:if> >3</option>
+					<option <c:if test="${pageSize == 5}">selected</c:if> >5</option>
+					<option <c:if test="${pageSize == 10}">selected</c:if> >10</option>
+					<option <c:if test="${pageSize == 15}">selected</c:if> >15</option>
+					<option <c:if test="${pageSize == 20}">selected</c:if> >20</option>
+					<option <c:if test="${pageSize == 30}">selected</c:if> >30</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	
+	<!-- 블록페이지 시작2  -->
+	<div class="text-center">
+	 <ul class="pagination justify-content-center">
+	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
+	  <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize +3}">이전블록</a></li></c:if>
+	  <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
+	    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-dark border-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${i}"><font color="white"><b>${i}</b></font></a></li></c:if>
+	    <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
+	  </c:forEach>
+	 	<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock+1)*blockSize +1}">다음블록</a></li></c:if>
+	 	<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
+	  </ul>
+	</div>
 </div>
 <p><br/></p>
 </body>

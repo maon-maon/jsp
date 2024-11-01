@@ -25,13 +25,13 @@ public class MemberJoinOkCommand implements MemberInterface {
 		String content = request.getParameter("content")==null ? "" : request.getParameter("content");
 		String photo = request.getParameter("photo")==null ? "" : request.getParameter("photo");
 		String userInfo = request.getParameter("userInfo")==null ? "" : request.getParameter("userInfo");
-		
+		//System.out.println("MemberJoinOkComma userInfo :"+userInfo);
 		if(photo.equals("")) photo = "noimage.jpg";
 		if(birthday.equals("")) {
 			LocalDate today = LocalDate.now();
 			birthday = today.toString();
 		}
-		
+
 		
 		// 비밀번호 암호화 처리
 		long temp = (int)(Math.random()*(999-100+1))+100;  //salt키로 3자리 난수로 생성 
@@ -59,9 +59,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 		vo.setPhoto(photo);
 		vo.setUserInfo(userInfo);
 		
-		//System.out.println("vo : "+vo);
-		
-		
+
 		//int res = 1; // 등록성공하면 반환값이 1ㅡ 실패하면 0으로 들어오기 때문에 res는 int타입이다
 		MemberDAO dao = new MemberDAO();
 		int res = dao.setMemberJoinOk(vo);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.member.MemberDeteilViewCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberListCommand;
 import study2.ajax.AjaxIdCheck0Command;
@@ -56,6 +57,16 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(com.equals("/MemberDeteilView")) {
+			command = new MemberDeteilViewCommand();
+			command.execute(request, response);
+			viewPage += "/member/memberDeteilView.jsp";
+		}
+//		else if(com.equals("/MemberLevelViewCheck")) {
+//			command = new Memb erLeve lViewCheckC ommand();
+//			command.execute(request, response);
+//			viewPage += "/member/memberList.jsp";
+//		} //안 만드어쓰고 MemberList에 level을 넘김
 		
 		
 	

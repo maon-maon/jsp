@@ -266,10 +266,10 @@
         <td><input type="file" name="photo" id="photo" class="form-control-file border" /></td>
       </tr>
       <tr class="mb-2">
-        <th class="text-center"><label for="userInfor" class="form-label">정보공개</label></th>
+        <th class="text-center"><label for="userInfo" class="form-label">정보공개</label></th>
         <td>
-          <input type="radio" name="userInfor" id="YES" value="공개" class="mr-1" checked /><label for="YES">공개</label> &nbsp;&nbsp;
-          <input type="radio" name="userInfor" id="NO" value="비공개" class="mr-1" /><label for="NO">비공개</label>
+          <input type="radio" name="userInfo" id="YES" value="공개" class="mr-1" checked /><label for="YES">공개</label> &nbsp;&nbsp;
+          <input type="radio" name="userInfo" id="NO" value="비공개" class="mr-1" /><label for="NO">비공개</label>
         </td>
       </tr>
     </table>

@@ -94,7 +94,7 @@ public class MemberLoginOkCommand implements MemberInterface {
 		//241031
 		// 회원등급별 등급명칭을 strLevel변수에 저장한다.(자동등업에서도 사용하기에 메소드처리했다.)
 		String strLevel = strLevelProcess(vo.getLevel());
-		session.setAttribute("strLevel", strLevel);
+		session.setAttribute("sStrLevel", strLevel);
 		
 		// 방문 포인트 10증가, 방문 카운트(총/오늘) 1증가, 마지막날짜(최종방문일자) 수정 
 	//241029
