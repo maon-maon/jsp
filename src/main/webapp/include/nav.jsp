@@ -21,7 +21,7 @@
       
       <c:if test="${!empty sNickName}">
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Board</a>
+	        <a class="nav-link" href="BoardList.bo">Board</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">Pds</a>
@@ -67,7 +67,7 @@
       </c:if>
       
       <li class="nav-item">
-      	<c:if test="${!empty sNickName}"><a class="nav-link" href="MemberLogout.mem">Logout</a></c:if>
+      	<c:if test="${!empty sNickName}"><a class="nav-link" href="MemberLogout.mem">${sMid}님 Logout</a></c:if>
       	<c:if test="${empty sNickName}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if>
       	<%-- <c:if test="${sNickName = null}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if> --%>
       	<%-- 개인 작업물<c:if test="${sNickName == 'midOk'}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if> --%>

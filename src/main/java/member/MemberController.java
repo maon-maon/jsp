@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.member.MemberClearCommand;
+
 @SuppressWarnings("serial")
 @WebServlet("*.mem")
 public class MemberController extends HttpServlet {
@@ -117,6 +119,7 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		
 		
 		
 	

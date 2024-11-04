@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.member.MemberClearCommand;
 import admin.member.MemberDeteilViewCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberListCommand;
@@ -67,7 +68,16 @@ public class AdminController extends HttpServlet {
 //			command.execute(request, response);
 //			viewPage += "/member/memberList.jsp";
 //		} //안 만드어쓰고 MemberList에 level을 넘김
-		
+		else if(com.equals("/BoardList")) {
+			//command = new BoardListCommand();
+			//command.execute(request, response);
+			viewPage += "/board/boardList.jsp";
+		}
+		else if(com.equals("/MemberClear")) {
+			command = new MemberClearCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		
 	
 	

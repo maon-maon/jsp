@@ -6,7 +6,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>memberList(admin).jsp</title>
+  <title>boardList(admin).jsp</title>
   <jsp:include page="/include/bs4.jsp"/>
 <style>
 	body {
@@ -22,7 +22,7 @@
 	function levelChange(e) {
 		//let level = document.getElementById("level").value;
 		//alert("레벨: "+e.value);
-			let ans = confirm("해당 회원의 등급을 변경하시겠습니까?");
+			let ans = confirm("변경?");
 			if(!ans) {
 				location.reload();
 				return false;
@@ -57,7 +57,7 @@
 		// 전체변경=전부보내기  부분변경=ajax : 전체 처리는 커맨드에서 처리하고 돌아오는게 나음
 	 /* location.href="MemberList.ad?level="+level; */		
 	 
-	 //alert("level={level}: "+level +"pageSize={pageSize}: "+${pageSize}+ "pag=1: "+${pag});
+	 alert("level={level}: "+level +"pageSize={pageSize}: "+${pageSize}+ "pag=1: "+${pag});
 	 location.href="MemberList.ad?level="+level+"&pageSize=${pageSize}&pag=1";			
 	}
 	
@@ -66,17 +66,9 @@
 		let pageSize = document.getElementById("pageSize").value;
 		/* location.href="MemberList.ad?pageSize="+pageSize; */
 		/* location.href="MemberList.ad?level= $ { level}&pageSize= $ { pageSize}& pa g=1"; */
-		//alert("level={level}: "+${level} +"pageSize={pageSize}: "+pageSize+ "pag=1: "+${pag});
+		alert("level={level}: "+${level} +"pageSize={pageSize}: "+pageSize+ "pag=1: "+${pag});
 		/* location.href = "MemberList.ad?pageSize=${pageSize}&pag=1&level="+level; */
 		location.href="MemberList.ad?level=${level}&pag=1&pageSize="+pageSize;	
-	}
-	
-	// 사용자 데이터 삭제
-	function memClear(mid) {
-		let ans = confirm("해당 회원 데이터를 삭제하시겠습니까? \n삭제한 데이터는 되돌릴수 없습니다.");
-		if(ans) {
-			location.href="MemberClear.ad?mid="+mid+"&pag=${pag}";
-		}
 	}
 </script>
 </head>
@@ -84,7 +76,7 @@
 	<jsp:include page="/include/header.jsp"/>
 <p><br/></p>
 <div class="container">
-	<h2 class="text-center">회 원 리 스 트</h2>
+	<h2 class="text-center">게 시 판 리 스 트 </h2>
 	<table class="table table-borderless">
 		<tr class="text-right">
 			<td>
@@ -133,14 +125,7 @@
 				<td>
 					<c:if test="${vo.userDel == 'NO'}">활동중</c:if>
 					<!-- 241101 -->
-					<c:if test="${vo.userDel != 'NO'}">
-						<%-- <c:if test="${}"><font color="red">탈퇴신청중</font>(${vo.elapesed_date})</c:if> --%>
-						<c:if test="${vo.elapesed_date < 30}"><font color="red">탈퇴신청중</font>(${vo.elapesed_date})</c:if>
-						<c:if test="${vo.elapesed_date >= 30}">
-							<!-- <a href="MemberClear.ad" class="btn btn-danger btn-sm">회원삭제</a> -->
-							<input type="button" value="회원삭제" onclick="memClear('${vo.mid}')" class="btn btn-danger btn-sm">
-						</c:if> <!-- '$ { vo.m id}':문자비교는 ''필수 입력 -->
-					</c:if>
+					<c:if test="${vo.userDel != 'NO'}"><font color="red">탈퇴신청중</font>(${vo.elapesed_date})</c:if>
 				</td>
 				<td>
 					<select name="level" id="level" onchange="levelChange(this)" >

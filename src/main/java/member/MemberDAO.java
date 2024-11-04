@@ -396,6 +396,24 @@ public class MemberDAO {
 		return vo;
 	}
 	
+	// 
+	public int setMemberClear(String mid) {
+		int res = 0;
+		//System.out.println("setMemberClea idx: "+idx);
+		try {
+			sql = "delete from member where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+			pstmtClose();
+		}	
+		//System.out.println("setMemberClea res: "+res);
+		return res;
+	}
+	
 	
 	
 }

@@ -37,7 +37,7 @@
 	<div>
 		<h5>게시판</h5>
 		<div>
-			<a href="" target="adminContent">게시판리스트</a>
+			<a href="BoardList.ad" target="adminContent">게시판리스트</a>
 		</div>
 	</div>
 </div>
