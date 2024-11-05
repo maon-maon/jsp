@@ -6,13 +6,13 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>boardList.jsp</title>
+  <title>boardSearchList.jsp</title>
   <jsp:include page="/include/bs4.jsp"/>
 <script>
 	'use strict';
 	
 	function pageSizeCheck() {
-		let pageSize = document.getElementById("pageSize").value;
+		let pageSize = document.get("pageSize").value;
 		location.href = "BoardList.bo?pag=1&pageSize="+pageSize;
 	}
 	
@@ -26,10 +26,13 @@
   <jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
-	<h2 class="text-center">게 시 판 리 스 트</h2>
+	<h2 class="text-center">게시판 검색결과 리스트</h2>
+	<div class="text-center">
+		<font color="blue">${searchTitle}</font>으로 <font color="brown">${searchString}</font> 검색결과 총 <font color="red"><b>${searchCnt}</b></font>건입니다.
+	</div>
 	<table class="table table-boderless">
 		<tr>
-			<td><a href="BoardInput.bo" class="btn btn-success btn-sm">글쓰기</a></td>
+			<td><a href="BoardList.bo" class="btn btn-success btn-sm">돌아가기</a></td>
 			<td class="text-right" >
 				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()" style="width: 50px; height: 30px;" class="text-center"> 
 					<option value="3" <c:if test="${pageSize == 3}">selected</c:if> >3</option>
@@ -50,7 +53,8 @@
 			<th>글쓴날짜</th>
 			<th>조회수(좋아요)</th>
 		</tr>
-		<c:set var="curScrStartNo" value="${curScrStartNo}" />
+		<%-- <c:set var="curScrStartNo" value="${curScrStartNo}" /> --%>
+		<c:set var="curScrStartNo" value="${searchCnt}" />
 		<c:forEach var="vo" items="${vos}" varStatus="st">
 			<c:if test="${vo.openSw == '공개' || sMid == vo.mid || sLevel == 0}">
 				<tr>
@@ -58,27 +62,13 @@
 					<td class="text-left">
 						<c:if test="${vo.claim == 'NO' || sMid == vo.mid || sLevel == 0}"><a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</c:if> 
 						<c:if test="${vo.claim != 'NO' && sMid == vo.mid && sLevel == 0}"><a href="javascript:alert('신고된 글입니다');">${vo.title}</c:if> 
-						<%-- <c:if test="${vo.date_diff == 0}"><img src="${ctp}/images/new.gif" /></c:if> --%>
-						<c:if test="${vo.time_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
 					</td>
 					<td>${vo.nickName}</td>
 					<td>
-					<c:if test="${vo.time_diff <= 24 && vo.date_diff == 0}">${fn:substring(vo.wDate,10,19)} ①</c:if>
-					<c:if test="${vo.time_diff <= 24 && vo.date_diff != 0}">${fn:substring(vo.wDate,0,19)} ②</c:if>
-					<c:if test="${vo.time_diff > 24 && vo.date_diff < 0}">${fn:substring(vo.wDate,0,10)} ③</c:if>
-					
-					<!-- 작동 확인 완료 -->
-					<%-- <c:if test="${fn:substring(vo.wDate,0,19) > yesterday }">${fn:substring(vo.wDate,10,19)} ①</c:if>
-					<c:if test="${fn:substring(vo.wDate,0,19) > yesterday && fn:substring(vo.wDate,0,10)!=today}">${fn:substring(vo.wDate,0,19)} ②</c:if>
-					<c:if test="${fn:substring(vo.wDate,0,19) < yesterday }">${fn:substring(vo.wDate,0,10)} ③</c:if> --%>
-						<%-- <c:if test="${fn:substring(vo.wDate,0,10) == today }">${fn:substring(vo.wDate,0,19)} ✨ </c:if>
-						<c:if test="${fn:substring(vo.wDate,0,10) != today }">${fn:substring(vo.wDate,0,19)}</c:if> --%>
-					</td> 
-					<td>
-						<c:if test="${vo.good < 20 && vo.good >= 0}">${vo.readNum}(${vo.good})</c:if>
-						<c:if test="${vo.good >= 20}">${vo.readNum}(<font color="red">${vo.good}</font>)</c:if>
-						<c:if test="${vo.good < 0}">${vo.readNum}(<font color="blue">${vo.good}</font>)</c:if>
+						<c:if test="${fn:substring(vo.wDate,0,10) == today }">${fn:substring(vo.wDate,0,19)}  </c:if>
+						<c:if test="${fn:substring(vo.wDate,0,10) != today }">${fn:substring(vo.wDate,0,10)}</c:if>
 					</td>
+					<td>${vo.readNum}</td>
 				</tr>
 			</c:if>
 		<c:set var="curScrStartNo" value="${curScrStartNo -1}"/>
@@ -89,7 +79,7 @@
 	<br/>
 </div>
 	
-	<!-- 페이징처리 -->
+	<!-- 블럭페이지 페이징처리 -->
 	<div class="text-center">
 		<ul class="pagination justify-content-center">
 	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
@@ -104,22 +94,7 @@
 	</div>
 <!-- 블럭페이지 끝 -->
 <br/>	
-<!-- 검색기 시작 -->
-<div class="container">
-	<form name="searchForm" method="post" action="BoardSearchList.bo" onchange="cursorMove()">
-		<b>검색 : </b>
-		<select name="search" id="search">
-			<option value="title">글제목</option> <!-- dao의 sql문 필드명을 value명으로 사용함 -->
-			<option value="nickName">작성자</option>
-			<option value="content">글내용</option>
-		</select>
-		<input type="text" name="searchString" id="searchString"  required />
-		<input type="submit" value="검색" class="btn btn-outline-secondary btn-sm" />
-	</form>
-</div>	
-<!--  -->	
-	
-	
+
 <p><br/></p>
   <jsp:include page="/include/footer.jsp"/>
 </body>

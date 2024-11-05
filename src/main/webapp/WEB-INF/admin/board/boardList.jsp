@@ -171,6 +171,8 @@
 	 	<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
 	  </ul>
 	</div>
+	<!-- 블록페이지 끝2  -->
+	
 </div>
 <p><br/></p>
 </body>

@@ -38,11 +38,12 @@ public class BoardDAO {
 	}
 	
 	
-	// 게시글 DB에서 가져오기
+	// 게시판 전체글 리스트 게시글 DB에서 가져오기
 	public List<BoardVO> getBoardList(int startIndexNo, int pageSize) {
 		List<BoardVO> vos = new ArrayList<BoardVO>();
 		try {
-			sql = "select * from board order by idx desc limit ?,?";
+			sql = "select *, datediff(wDate ,now()) as date_diff, timestampdiff(hour, wDate ,now()) as time_diff"
+					+ " from board order by idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -61,6 +62,10 @@ public class BoardDAO {
 				vo.setGood(rs.getInt("good"));
 				vo.setwDate(rs.getString("wDate"));
 				vo.setClaim(rs.getString("claim"));
+				
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setTime_diff(rs.getInt("time_diff"));
+				
 				vos.add(vo);
 			}		
 		} catch (SQLException e) {
@@ -191,7 +196,86 @@ public class BoardDAO {
 		return res;
 	}
 	
+	// 좋아요수 증가처리
+	public int setBoardGoodCheck(int idx, int goodCnt) {
+		int res = 0;
+		try {
+//			sql = "update board set good = good+1 where idx = ?";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, idx);
+			
+			sql = "update board set good = good+? where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, goodCnt);
+			pstmt.setInt(2, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		}	finally {
+			pstmtClose();
+		}
+		return res;
+	}
 	
+	// 검색글 전체 리스트
+	public List<BoardVO> getBoardSearchList(String search, String searchString) {
+		List<BoardVO> vos = new ArrayList<BoardVO>();
+		try {
+			
+				sql = "select *, datediff(wDate ,now()) as date_diff, timestampdiff(hour, wDate ,now()) as time_diff "
+						+ "from board where "+search+" like ?";
+				// ?는 문자열로 들어옴,"따옴표"가 문자에 붙어서 들어옴. 문자만 들어오는게 아님
+				// 여러개를 검색할 때는 변수로 받아서 사용함
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+searchString+"%");
+			rs = pstmt.executeQuery();
+					
+			while(rs.next()) {
+				vo = new BoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setOpenSw(rs.getString("openSw"));
+				vo.setReadNum(rs.getInt("readNum"));
+				vo.setGood(rs.getInt("good"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setClaim(rs.getString("claim"));
+
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setTime_diff(rs.getInt("time_diff"));
+				
+				vos.add(vo);
+			}		
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return vos;
+	}
+
+	// 게시판 작성 건수 확인
+	public int getBoardCnt(String mid, String nickName) {
+		int boardCnt = 0;
+		try {
+			sql = "select count(idx) as boardCnt from board where mid=? or nickName=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);					
+			pstmt.setString(2, nickName);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			boardCnt = rs.getInt("boardCnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return boardCnt;
+	}
 	
 	
 	

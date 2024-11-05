@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.claim.BoardClaimInputCommand;
+import admin.claim.ClaimDeleteOkCommand;
+import admin.claim.ClaimListCommand;
+import admin.claim.ClaimViewCheckCommand;
 import admin.member.MemberClearCommand;
 import admin.member.MemberDeteilViewCommand;
 import admin.member.MemberLevelChangeCommand;
@@ -34,7 +38,12 @@ public class AdminController extends HttpServlet {
 		HttpSession session = request.getSession();
 	  int level = session.getAttribute("sLevel")==null ? 999 : (int)session.getAttribute("sLevel");
 		
-	  if(level != 0) { 
+	  if(com.equals("/BoardClaimInput")) {
+	  	command = new BoardClaimInputCommand();
+	  	command.execute(request, response);
+	  	return;
+	  }
+	  else if(level != 0) { 
 			request.setAttribute("message", "로그인후 사용하세요");
 			request.setAttribute("url", "/MemberLogin.mem");
 			viewPage = "/include/message.jsp";
@@ -77,6 +86,21 @@ public class AdminController extends HttpServlet {
 			command = new MemberClearCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/ClaimList")) {
+			command = new ClaimListCommand();
+			command.execute(request, response);
+			viewPage += "/claim/claimList.jsp";
+		}
+		else if(com.equals("/ClaimViewCheck")) {
+			command = new ClaimViewCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ClaimDeleteOk")) {
+			command = new ClaimDeleteOkCommand();
+			command.execute(request, response);
+			return;
 		}
 		
 	

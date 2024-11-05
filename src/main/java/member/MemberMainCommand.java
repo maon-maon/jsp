@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.BoardDAO;
 import guest.guestDAO;
 
 public class MemberMainCommand implements MemberInterface {
@@ -28,6 +29,12 @@ public class MemberMainCommand implements MemberInterface {
 		guestDAO gDao = new guestDAO();
 		int guestCnt = gDao.getGuestCnt(mVo.getMid(),mVo.getName(),mVo.getNickName());
 		request.setAttribute("guestCnt", guestCnt);
+		// 게시판에 글 올린 횟수 담아오기
+		//<!--  작성자의 닉네임/아이디으로 검색 -->
+		BoardDAO bDao = new BoardDAO(); 
+		int boardCnt = bDao.getBoardCnt(mVo.getMid(),mVo.getNickName());
+		request.setAttribute("boardCnt", boardCnt);
+	
 	}
 
 }

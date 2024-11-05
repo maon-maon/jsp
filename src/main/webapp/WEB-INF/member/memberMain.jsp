@@ -32,6 +32,7 @@
   <!-- 241101 모달은 같은 창에서 뜨기 때문에 창의 이동이 없이 내용을 볼 수 있음
   			현재브라우저의 내용만 띄울 수 있음 -->
   <div>방명록에 작성한글 수 : <font color="blue">총 <b>${guestCnt}</b>건</font></div>
+  <div>게시판에 작성한글 수 : <font color="blue">총 <b>${boardCnt}</b>건</font></div>
 	
 	<!-- The Modal 241101-->
 	<div class="modal" id="myModal">

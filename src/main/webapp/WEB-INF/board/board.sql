@@ -22,5 +22,8 @@ select * from board;
 insert into board values (default,'admin','관리맨','게시판 서비스를 시작합니다.','공개 게시판입니다. 많이 사랑해주세요',
 '192.168.50.20',default,default,default,default,default);
 
+select idx, mid, title, datediff(wDate ,now()) as date_diff from board order by idx desc;
+
+select idx, mid, title, timestampdiff(hour, wDate ,now()) as time_diff from board order by idx desc;
 
 

@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import admin.claim.ClaimVO;
 import common.GetConn22;
 import common.GetConn;
 import member.MemberVO;
@@ -90,6 +93,128 @@ public class AdminDAO {
 			rsClose();
 		}
 		return vo;
+	}
+	
+	//
+	public int setBoardClaimInput(ClaimVO vo) {
+		int res = 0;
+		try { //여기는 테이블의 필드명
+			sql = "insert into claim values (default, ?, ?, ?, ?, default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getPart());
+			pstmt.setInt(2, vo.getPartIdx());
+			pstmt.setString(3, vo.getClaimMid());
+			pstmt.setString(4, vo.getClaimContent()); 
+			res = pstmt.executeUpdate();
+			pstmtClose(); //싱글톤객체는 테이블 사용시 pstmt 반납필수
+			
+			//sql = "update board set claim = 'OK' where idx=?";
+			// 여기는 삽입해서 추가로 쓰는 필드명 as로 생성한것
+			sql = "update "+vo.getPart()+" set claim = 'OK' where idx=?"; //vo.getPart():보드테이블의 번호=board
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getPartIdx());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+	
+	// 신고 내역 리스트
+	public List<ClaimVO> getClaimList(int startIndexNo, int pageSize) {
+		List<ClaimVO> vos = new ArrayList<ClaimVO>();
+		try {
+//			sql = "select c.*,b.title as title,b.nickName as nickName, b.mid as mid, b.claim as claim from"
+//					+ " claim c, board b where c.partIdx=b.idx order by idx desc";
+			sql = "select c.*,b.title as title,b.nickName as nickName, b.mid as mid, b.claim as claim from"
+					+ " claim c, board b where c.partIdx=b.idx order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startIndexNo);
+			pstmt.setInt(2, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ClaimVO vo = new ClaimVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setPart(rs.getString("part"));
+				vo.setPartIdx(rs.getInt("partIdx"));
+				vo.setClaimMid(rs.getString("claimMid"));
+				vo.setClaimContent(rs.getString("claimContent"));
+				vo.setClaimDate(rs.getString("claimDate"));
+				
+				vo.setTitle(rs.getString("title"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setMid(rs.getString("mid"));
+				vo.setClaim(rs.getString("claim"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
+	
+	// 신고항목 표시하기(NO)/감추기(OK)
+	public int setClaimViewCheck(String flag, int idx) {
+		int res = 0;
+		try {
+			sql = "update board set claim=? where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, flag);
+			pstmt.setInt(2, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+	
+	// 신고글과 원본글 삭제
+	public int setClaimDeleteOk(String part, int idx) {
+		int res = 0;
+		try {
+			sql = "delete from board where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			res = pstmt.executeUpdate();
+			pstmtClose();
+			
+			sql = "delete from claim where part=? and partIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, part);
+			pstmt.setInt(2, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+	
+	// 신고리스트 총 글 수 확인: 페이징 처리
+	public int getTotRecCnt() {
+		int totRecCnt = 0;
+		try {
+			sql = "select count(idx) as totRecCnt from claim";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			totRecCnt = rs.getInt("totRecCnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return totRecCnt;
 	}
 	
 	
