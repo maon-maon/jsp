@@ -18,6 +18,11 @@
 	<script>
 		'use strict';
 		
+		$(function() {
+			$(".replyUpdateForm").hide();
+		})
+		
+		
 		function boardDelete() {
 			let ans = confirm("해당 게시글을 삭제하시겠습니까?");
 			if(ans)	location.href="BoardDelete.bo?idx=${vo.idx}"; // 함수에서 idx를 받아서 넘김
@@ -114,6 +119,107 @@
 				}
 			});
 		}
+		
+		// 댓글 달기
+		function replycheck() {
+			let content = $("#content").val();
+			if(content=="") {
+				alert("댓글 입력하세요");
+				return false;
+			}
+			
+			let query = {
+	    			boardIdx 	: ${vo.idx},
+	    			mid 			: '${sMid}',
+	    			nickName 	: '${sNickName}',
+	    			content   : content,
+	    			hostIp    : '${pageContext.request.remoteAddr}'
+	    	}
+			
+			$.ajax({
+				type : "post",
+				url : "BoardReplyInput.bo",
+				data : query,
+				success: function(res) {
+					if(res != "0") {
+						alert("댓글을 등록합니다.");
+						//$(".replyUpdateForm").hide();
+						location.reload(); // 전체 리로드
+						//부분리로드
+						//$("#replyViewList").load(location.href + ' #replyViewList');
+					}
+					else alert("댓글 등록 실패하였습니다.");
+				} ,
+				error: function() {
+					alert("전송오류");					
+				}
+			});
+		}
+		
+		// 댓글 삭제 처리
+		function replyDeleteCheck(idx) {
+			let ans = confirm("선택한 댓글을 삭제할까요?");
+			if(!ans) return false;
+			
+			$.ajax({
+				type : "post",
+				url : "BoardReplyDelete.bo",
+				data : {idx : idx},
+				success: function(res) {
+					if(res != "0") {
+						alert("댓글을 삭제 되었습니다.");
+						location.reload();
+					}
+					else alert("댓글 삭제 실패하였습니다.");
+				} ,
+				error: function() {
+					alert("전송오류");					
+				}
+			});
+		}
+		
+		//댓글 수정창 보여주기
+		function replyDeleteUpdateCheck(idx) {
+			$(".replyUpdateForm").hide();
+			$("#replyUpdateForm"+idx).show();
+		}
+		
+		// 댓글 수정 하기
+		function replyUpdatecheck(idx) {
+			let content = $("#content"+idx).val();
+			if(content=="") {
+				alert("댓글 입력하세요");
+				return false;
+			}
+			
+			let query = {
+				idx : idx,
+				content : content,
+				hostIp : '${pageContext.request.remoteAddr}'
+			};
+			
+			$.ajax({
+				type : "post",
+				url : "BoardReplyUpdate.bo",
+				data : query,
+				success: function(res) {
+					if(res != "0") {
+						alert("댓글을 수정합니다.");
+						location.reload();
+					}
+					else alert("댓글 수정 실패하였습니다.");
+				} ,
+				error: function() {
+					alert("전송오류");					
+				}
+			});
+		}
+		
+		// 댓글 수정창 닫기
+		function replyUpdateViewClosek(idx) {
+			$("#replyUpdateForm"+idx).hide();
+		}
+		
 	</script>
 </head>
 <body>
@@ -179,6 +285,97 @@
       </td>
     </tr>
   </table>
+</div>
+<hr/>
+
+<div class="container">
+	<!-- 241106 -->
+	<!-- 이전글/다음글 -->
+	<table class="table table-borderless">
+		<tr>
+			<td>
+				<c:if test="${!empty nextVo.title}">
+					다음글 <a href="BoardContent.bo?idx=${nextVo.idx}&pag=${pag}&pageSize=${pageSize}" >${nextVo.title}</a><br/>
+				</c:if>
+				<c:if test="${!empty preVo.title}">
+					이전글 <a href="BoardContent.bo?idx=${preVo.idx}&pag=${pag}&pageSize=${pageSize}" >${preVo.title}</a><br/>
+				</c:if>
+			</td>
+		</tr>
+	</table>
+	<!-- 이전글/다음글 -->
+	<p><br/></p>
+	
+	
+	
+	<div id="replyViewList">
+	<!-- 241106 -->
+	<!-- 댓글 처리(리스트/입력) -->
+		<!-- 댓글 리스트 -->
+		<table class="table table-hover text-center">
+			<tr>
+				<th>작성자</th>
+				<th>댓글내용</th>
+				<th>댓작성일</th>
+				<th>접속IP</th>
+			</tr>
+			<c:forEach var="vo" items="${replyVos}" varStatus="st">
+				<tr>
+					<td>${vo.nickName}
+						 <c:if test="${sMid == vo.mid || sLevel == 0}">
+						 	(<a href="javascript:replyDeleteCheck(${vo.idx})" title="댓글삭제">x</a>
+						 	<c:if test="${sMid == vo.mid }">
+						 		<a href="javascript:replyDeleteUpdateCheck(${vo.idx})" title="댓글수정">√</a>)
+						 	</c:if>
+						 </c:if>
+					</td> 
+					<td class="text-left">${fn:replace(vo.content, newLine, "<br/>")}</td>
+					<td>${fn:substring(vo.wDate,0,10)}</td>
+					<td>${vo.hostIp}</td>
+				</tr>
+				<tr >
+					<td colspan="4" class="m-0 p-0 " style="border: none;">
+						<div id="replyUpdateForm${vo.idx}" class="replyUpdateForm">
+							<form name="replyUpdateForm" >
+								<table class="table table-bordeless text-center">
+									<tr>
+										<td style="width: 85%" class="text-left">
+											글내용 :
+											<textarea rows="4" name="content" id="content${vo.idx}" class="form-control" >${vo.content}</textarea>
+										</td>
+										<td style="width: 15%">
+											<p>작성자 : ${sNickName}</p>
+											<p>
+												<a href="javascript:replyUpdatecheck(${vo.idx})" class="badge badge-info " >댓글수정</a><br/>
+												<a href="javascript:replyUpdateViewClosek(${vo.idx})" class="badge badge-warning" >댓글창닫기</a>
+											</p>
+										</td>
+									</tr>
+								</table>
+							</form>	
+						</div>
+					</td>
+				</tr>
+			</c:forEach>
+			<tr><td colspan="4" class="m-0 p-0"></td></tr>
+		</table>
+		<!-- 댓글 입력창 -->
+		<form name="replyForm" >
+			<table class="table table-bordeless text-center">
+				<tr>
+					<td style="width: 85%" class="text-left">
+						글내용 :
+						<textarea rows="4" name="content" id="content" class="form-control" placeholder="댓글 입력하세요"></textarea>
+					</td>
+					<td style="width: 15%">
+						<p>작성자 : ${sNickName}</p>
+						<p><input type="button" value="댓글달기" onclick="replycheck()" class="btn btn-info btn-sm" /></p>
+					</td>
+				</tr>
+			</table>
+		</form>	
+	<!-- 댓글 처리 끝 -->
+	</div>
 </div>
 
  	<!-- The Modal 시작 -->

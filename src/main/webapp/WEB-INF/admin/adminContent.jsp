@@ -18,11 +18,11 @@
 	  신규회원 처리
 		탈퇴신청회원 처리
 	  -->
-	 <p>방명록 새글 : __건</p>
-	 <p>게시판 새글 : __건</p>
-	 <p>신고글(최근 1주일) : __건</p>
-	 <p>신규등록회원(준회원) : __건</p>
-	 <p>탈퇴신청원 : __건</p>
+	 <p>방명록 새글 : <font color="blue"><b>${newGuestCnt}</b></font>건</p>
+	 <p>게시판 새글 : <font color="blue"><b>${newBoardCnt}</b></font>건</p>
+	 <p>신고글(최근 1주일) : <font color="blue"><b>${newClaimCnt}</b></font>건</p>
+	 <p>신규등록회원(준회원) : <font color="blue"><b>${newJoinCnt}</b></font>건</p>
+	 <p>탈퇴신청원 : <font color="blue"><b>${newUserDelCnt}</b></font>건</p>
 </div>
 <p><br/></p>
 </body>

@@ -8,10 +8,14 @@ create table claim(
 	claimMid varchar(30) not null, /* 신고자 아이디*/
 	claimContent text not null,  	/* 신고사유*/
 	claimDate datetime default now(), /* 신고 날짜*/
-	primary key(idx)
+	primary key(idx),
+	foreign key(partIdx) references board(idx) on update on delete cascade
 );
 desc claim;
 --drop table claim;
+
+-- 외래키 추가하기
+alter table claim add constraint foreign key(partIdx) references board(idx) on update on delete cascade
 
 select * from claim;
 
@@ -23,4 +27,4 @@ select c.*,b.title,b.nickName, b.mid from claim c, board b where c.partIdx=b.idx
 select c.*,b.title as title,b.nickName as nickName, b.mid as mid from claim c, board b where c.partIdx=b.idx;
 /* as로 변수를 주면 vo에서 필드로 등록할 수 있음= vo에서 한 덩어리로 가지고 다닐 수 있음*/
 
-
+select count(*) as newClaimCnt from claim where datediff(claimDate, now()) = 0;

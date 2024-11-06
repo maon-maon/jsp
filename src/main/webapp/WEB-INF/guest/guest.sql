@@ -15,3 +15,7 @@ drop table;
 insert into guest values (default, '관리자', '방명록 서비스를 시작합니다.', 'green@gmail.com', 'blog.green.naver.com', default, '192.168.50.52'); 
 
 select * from guest;
+
+select datediff(visitDate, now()) as date_diff from guest order by date_diff desc;
+
+select count(*) as newGuestCnt from guest where datediff(visitDate, now())=0;

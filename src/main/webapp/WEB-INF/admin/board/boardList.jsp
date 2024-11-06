@@ -8,145 +8,93 @@
   <meta charset="UTF-8">
   <title>boardList(admin).jsp</title>
   <jsp:include page="/include/bs4.jsp"/>
-<style>
-	body {
-		font-size: 0.8em;
-	}
-	th {
-		text-align: center;
-	}
-</style>
 <script>
 	'use strict';
 	
-	function levelChange(e) {
-		//let level = document.getElementById("level").value;
-		//alert("레벨: "+e.value);
-			let ans = confirm("변경?");
-			if(!ans) {
-				location.reload();
-				return false;
-			}
-			//alert("레벨: "+e.value);
-			let items = e.value.split("/");
-			
-		$.ajax({
+	function pageSizeCheck() {
+		let pageSize = document.getElementById("pageSize").value;
+		location.href = "BoardList.ad?pag=1&pageSize="+pageSize;
+	}
+	
+	function cursorMove() {
+		document.getElementById("searchString").focus();
+	}
+	
+	function contentView(content) {
+    $("#myModal #modalContent").html(content);
+  }
+	
+	// 전체선택
+	function allCheck() {
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			myForm.idxFlag[i].checked = true;
+		}
+	}
+	
+	// 전체해제
+	function allReset() {
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			myForm.idxFlag[i].checked = false;
+		}
+	}
+	
+	// 선택반전
+	function reverseCheck() {
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			myForm.idxFlag[i].checked = !myForm.idxFlag[i].checked;
+    	}
+	}
+	
+	// 선택항목삭제
+	function selectDeleteCheck() {
+		let idxSelectArray = "";
+		
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+    	if(myForm.idxFlag[i].checked) idxSelectArray += myForm.idxFlag[i].value + "/";
+    }
+    idxSelectArray = idxSelectArray.substring(0,idxSelectArray.length-1);
+    	
+  	if(idxSelectArray == "") {
+  		alert("삭제할 게시물을 선택하세요");
+  		return false;
+  	}
+  	let ans= confirm("정말 삭제하시겠습니까?");
+  	if(!ans) return false;
+  	
+  	$.ajax({
 			type : "post",
-			url  : "MemberLevelChange.ad",
-			data : {
-				level : items[0],
-				idx   : items[1]
-    		},
-    		
+			url : "BoardSelectDelete.ad",
+			data : {idxSelectArray : idxSelectArray},
 			success: function(res) {
-				if(res != 0) {
-					alert("등급 수정 완료!!");
-					location.reload();
+				if(res != '0') {
+					alert("삭제 처리 완료");
+					location.reload()
 				}
-				else alert("등급 수정 실패~~");
+				else alert("삭제 처리 실패");
 			},
 			error: function() {
 				alert("전송오류");
 			}
-		});
+  	});
 	}
 	
-	// 등급별 조회
-	function levelViewCheck() {
-		let level = document.getElementById("levelView").value;
-		// 전체변경=전부보내기  부분변경=ajax : 전체 처리는 커맨드에서 처리하고 돌아오는게 나음
-	 /* location.href="MemberList.ad?level="+level; */		
-	 
-	 alert("level={level}: "+level +"pageSize={pageSize}: "+${pageSize}+ "pag=1: "+${pag});
-	 location.href="MemberList.ad?level="+level+"&pageSize=${pageSize}&pag=1";			
-	}
-	
-	// 사용자 페이지 설정
-	function pageSizeCheck() {
-		let pageSize = document.getElementById("pageSize").value;
-		/* location.href="MemberList.ad?pageSize="+pageSize; */
-		/* location.href="MemberList.ad?level= $ { level}&pageSize= $ { pageSize}& pa g=1"; */
-		alert("level={level}: "+${level} +"pageSize={pageSize}: "+pageSize+ "pag=1: "+${pag});
-		/* location.href = "MemberList.ad?pageSize=${pageSize}&pag=1&level="+level; */
-		location.href="MemberList.ad?level=${level}&pag=1&pageSize="+pageSize;	
-	}
 </script>
 </head>
 <body>
-	<jsp:include page="/include/header.jsp"/>
+  <jsp:include page="/include/header.jsp"/>
 <p><br/></p>
 <div class="container">
-	<h2 class="text-center">게 시 판 리 스 트 </h2>
-	<table class="table table-borderless">
-		<tr class="text-right">
-			<td>
-				<select name="levelView" id="levelView" onchange="levelViewCheck()"> <!-- onchange:선택이 바뀌면 변화 -->
-					<option value=""   <c:if test="${empty level}">selected</c:if> >전체회원</option>
-					<option value="1"  <c:if test="${level == 1}">selected</c:if> >준회원</option>
-					<option value="2"  <c:if test="${level == 2}">selected</c:if> >정회원</option>
-					<option value="3"  <c:if test="${level == 3}">selected</c:if> >우수회원</option>
-					<option value="99" <c:if test="${level == 99}">selected</c:if> >탈퇴신청회원</option>
-					<option value="0"  <c:if test="${level == 0}">selected</c:if> >관리자</option>
-				</select>
+	<h2 class="text-center">게 시 판 리 스 트</h2>
+	<table class="table table-boderless">
+		<tr>
+			<td class="text-left">
+				<input type="button" value="전체선택" onclick="allCheck()" class="btn btn-success btn-sm mr-1">
+				<input type="button" value="전체취소" onclick="allReset()" class="btn btn-primary btn-sm mr-1">
+				<input type="button" value="선택반전" onclick="reverseCheck()" class="btn btn-warning btn-sm mr-1">
+				<input type="button" value="선택항목삭제" onclick="selectDeleteCheck()" class="btn btn-danger btn-sm mr-1">
 			</td>
-		</tr>
-	</table>
-	
-	<!-- 테이블로 출력 -->
-	<table class="table tqble-bordered">
-		<tr class="table-info">
-		<!-- <tr class="table-info"> -->
-			<th>번 호</th>
-			<th>닉네임</th>
-			<th>아이디</th>
-			<th>성 명</th>
-			<th>성 별</th>
-			<th>생 일</th>
-			<th>이메일</th>
-			<th>최종방문일</th>
-			<th>활동여부</th>
-			<th>회원등급</th>
-			<th>공개여부</th>
-		</tr>
-		<c:forEach var="vo" items="${vos}" varStatus="st">
-			<tr <c:if test="${vo.userInfo != '공개'}"> style="background-color:#fcc"</c:if>>
-				<%-- <td class="text-center"> $ { st.count}</td> --%>
-				<td>${vo.idx}</td>
-				<td>${vo.nickName}</td>
-				<td><a href="MemberDeteilView.ad?idx=${vo.idx}">${vo.mid}</a></td>
-				<td>${vo.name}</td>
-				<td>${vo.gender}</td>
-				<td>${fn:substring(vo.birthday,0,10)}</td>
-				<td>${vo.email}</td>
-				<td>
-					<c:if test="${sMid == vo.mid}">${fn:substring(sLastDate,0,16)}</c:if>
-					<c:if test="${sMid != vo.mid}">${fn:substring(vo.lastDate,0,16)}</c:if>
-				</td>
-				<td>
-					<c:if test="${vo.userDel == 'NO'}">활동중</c:if>
-					<!-- 241101 -->
-					<c:if test="${vo.userDel != 'NO'}"><font color="red">탈퇴신청중</font>(${vo.elapesed_date})</c:if>
-				</td>
-				<td>
-					<select name="level" id="level" onchange="levelChange(this)" >
-						<option value="1/${vo.idx}" ${vo.level == 1 ? 'selected' : '' }>준회원</option>
-						<option value="2/${vo.idx}" ${vo.level == 2 ? 'selected' : '' }>정회원<option>
-						<option value="3/${vo.idx}" ${vo.level == 3 ? 'selected' : '' }>우수회원<option>
-						<option value="0/${vo.idx}" ${vo.level == 0 ? 'selected' : '' }>관리자</option>
-						<option value="99/${vo.idx}" ${vo.level == 99 ? 'selected' : '' }>탈퇴신청회원</option>
-					</select>
-				</td>
-				<td>${vo.userInfo}</td>
-			</tr>
-		</c:forEach>
-		<tr><td colspan="10" class="m-0 p-0"></td></tr>
-	</table>
-	
-	<!-- 사용자 페이지 설정 241101 -->
-	<table class="table table-borderless">
-		<tr >
-			<td>
-				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()"> 
+			<td class="text-right" >
+				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()" style="width: 50px; height: 30px;" class="text-center"> 
 					<option value="3" <c:if test="${pageSize == 3}">selected</c:if> >3</option>
 					<option value="5"  <c:if test="${pageSize == 5}">selected</c:if> >5</option>
 					<option value="10"  <c:if test="${pageSize == 10}">selected</c:if> >10</option>
@@ -158,22 +106,98 @@
 		</tr>
 	</table>
 	
-	<!-- 블록페이지 시작2  -->
+	<form name="myForm">
+		<table class="table table-hover text-center">
+			<tr style="background-color: #eee">
+				<th>글번호</th>
+				<th>글제목(댓글)</th>
+				<th>글쓴이</th>
+				<th>글쓴날짜</th>
+				<th>조회수(좋아요)</th>
+			</tr>
+			<c:set var="curScrStartNo" value="${curScrStartNo}" />
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				<tr>
+					<td><input type="checkbox" name="idxFlag" id="idxFlag${vo.idx}" value="${vo.idx}"/> ${curScrStartNo}(${vo.idx})</td>
+					<td class="text-left">
+						<c:if test="${vo.claim == 'NO' || sMid == vo.mid || sLevel == 0}"><a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</c:if> 
+						<c:if test="${vo.claim != 'NO' && sMid == vo.mid && sLevel == 0}"><a href="javascript:alert('신고된 글입니다');">${vo.title}</c:if> 
+						<%-- <c:if test="${vo.date_diff == 0}"><img src="${ctp}/images/new.gif" /></c:if> --%>
+						<c:if test="${vo.time_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+						<c:if test="${vo.replyCnt != 0}">(${vo.replyCnt})</c:if>
+					</td>
+					<td><a href="#" onclick='contentView("${vo.content}")' data-toggle="modal" data-target="#myModal">${vo.nickName}</a></td>
+					<%-- <td><a href="#">${vo.nickName}</a></td> --%>
+					<td>
+					 ${vo.time_diff > 24 ? fn:substring(vo.wDate,0,10) : vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,19)}
+					</td> 
+					<td>
+						<c:if test="${vo.good < 20 && vo.good >= 0}">${vo.readNum}(${vo.good})</c:if>
+						<c:if test="${vo.good >= 20}">${vo.readNum}(<font color="red">${vo.good}</font>)</c:if>
+						<c:if test="${vo.good < 0}">${vo.readNum}(<font color="blue">${vo.good}</font>)</c:if>
+					</td>
+				</tr>
+			<c:set var="curScrStartNo" value="${curScrStartNo -1}"/>
+			</c:forEach>
+			
+			<tr><td colspan="5" class="p-0 m-0"></td></tr>
+		</table>
+	</form>
+	<br/>
+</div>
+	
+	<!-- 페이징처리 -->
 	<div class="text-center">
-	 <ul class="pagination justify-content-center">
-	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
-	  <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize +3}">이전블록</a></li></c:if>
+		<ul class="pagination justify-content-center">
+	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.ad?pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
+	  <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.ad?pageSize=${pageSize}&pag=${(curBlock-1)*blockSize +3}">이전블록</a></li></c:if>
 	  <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
-	    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-dark border-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${i}"><font color="white"><b>${i}</b></font></a></li></c:if>
-	    <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
+	    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-dark border-secondary" href="BoardList.ad?pageSize=${pageSize}&pag=${i}"><font color="white"><b>${i}</b></font></a></li></c:if>
+	    <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.ad?pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
 	  </c:forEach>
-	 	<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock+1)*blockSize +1}">다음블록</a></li></c:if>
-	 	<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
+	 	<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.ad?pageSize=${pageSize}&pag=${(curBlock+1)*blockSize +1}">다음블록</a></li></c:if>
+	 	<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.ad?pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
 	  </ul>
 	</div>
-	<!-- 블록페이지 끝2  -->
+<!-- 블럭페이지 끝 -->
+<br/>	
+<!-- 검색기 시작 -->
+<div class="container">
+	<form name="searchForm" method="post" action="BoardSearchList.bo" onchange="cursorMove()">
+		<b>검색 : </b>
+		<select name="search" id="search">
+			<option value="title">글제목</option> <!-- dao의 sql문 필드명을 value명으로 사용함 -->
+			<option value="nickName">작성자</option>
+			<option value="content">글내용</option>
+		</select>
+		<input type="text" name="searchString" id="searchString"  required />
+		<input type="submit" value="검색" class="btn btn-outline-secondary btn-sm" />
+	</form>
+</div>	
+<!--  -->	
 	
+	
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">글내용</h3>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <span id="modalContent"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- The Modal -->
+
+	
+	
 <p><br/></p>
 </body>
 </html>

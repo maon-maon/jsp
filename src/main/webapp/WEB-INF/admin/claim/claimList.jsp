@@ -64,6 +64,66 @@
 		let pageSize = document.getElementById("pageSize").value;
 		location.href="ClaimList.ad?pag=1&pageSize="+pageSize;
 	}
+	
+	// 검색기 
+	function cursorMove() {
+		document.getElementById("searchString").focus();
+	}
+	
+	//전체선택
+	function allCheck() {
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			myForm.idxFlag[i].checked = true;
+		}
+	}
+	//전체취소
+	function allReset() {
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			myForm.idxFlag[i].checked = false;
+		}
+	}
+	//선택반전
+	function reverseCheck() {
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			myForm.idxFlag[i].checked = !myForm.idxFlag[i].checked;
+		}
+	}
+	//선택항목삭제
+	function selectDeleteCheck() {
+		let idxSelectArray = "";
+		
+		for(let i=0; i<myForm.idxFlag.length; i++) {
+			if(myForm.idxFlag[i].checked) idxSelectArray += myForm.idxFlag[i].value + "/";
+		}
+		idxSelectArray = idxSelectArray.substring(0,idxSelectArray.length-1);
+		
+		if(idxSelectArray == "") {
+  		alert("삭제할 게시물을 선택하세요");
+  		return false;
+  	}
+  	let ans= confirm("정말 삭제하시겠습니까?");
+  	if(!ans) return false;
+		
+		$.ajax({
+			type : "post",
+			url : "ClaimSelectDelete.ad",
+			data : {idxSelectArray : idxSelectArray},
+			success: function(res) {
+				if(res != '0') {
+					alert("삭제 처리 완료");
+					location.reload()
+				}
+				else alert("삭제 처리 실패");
+			},
+			error: function() {
+				alert("전송오류");
+			}
+		});
+	}
+	
+	
+	
+	
 </script>
 </head>
 <body>
@@ -73,6 +133,12 @@
 	<h2>신 고 리 스 트</h2>
 	<table class="table table-borderless">
 		<tr class="text-right">
+			<td class="text-left">
+				<input type="button" value="전체선택" onclick="allCheck()" class="btn btn-success btn-sm mr-1">
+				<input type="button" value="전체취소" onclick="allReset()" class="btn btn-primary btn-sm mr-1">
+				<input type="button" value="선택반전" onclick="reverseCheck()" class="btn btn-warning btn-sm mr-1">
+				<input type="button" value="선택항목삭제" onclick="selectDeleteCheck()" class="btn btn-danger btn-sm mr-1">
+			</td>
 			<td> 
 				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">
 					<option value="3" <c:if test="${pageSize == 3}">selected</c:if> >3</option>
@@ -85,6 +151,9 @@
 			</td>
 		</tr>	
 	</table>
+	
+	
+<form name="myForm">	
 	<table class="table tqble-hover text-center">
 		<tr class="table-info">
 			<th>번 호</th>
@@ -100,7 +169,7 @@
 		<c:forEach var="vo" items="${vos}" varStatus="st">
 			<tr>
 				<%-- <td>${st.count}</td> --%>
-				<td>${curScrStartNo}</td>
+				<td><input type="checkbox" name="idxFlag" id="idxFlag${vo.idx}" value="${vo.idx}" />  ${curScrStartNo}</td>
 				<td>${vo.part}</td>
 				<td>${vo.title}</td>
 				<td>${vo.mid}</td>
@@ -117,6 +186,8 @@
 		</c:forEach>
 		<tr><td colspan="8" class="m-0 p-0"></td></tr>
 	</table>
+</form>
+<br/>
 	
 	<!-- 블록페이지 시작2  -->
 	<div class="text-center">
@@ -132,6 +203,21 @@
 	  </ul>
 	</div>
 	<!-- 블록페이지 끝2  -->
+	
+	<!-- 검색기 시작: 미완성 -->
+	<div class="container">
+		<form name="searchForm" method="post" action="BoardSearchList.bo" onchange="cursorMove()">
+			<b>검색 : </b>
+			<select name="search" id="search">
+				<option value="title">글제목</option> <!-- dao의 sql문 필드명을 value명으로 사용함 -->
+				<option value="nickName">작성자</option>
+				<option value="content">글내용</option>
+			</select>
+			<input type="text" name="searchString" id="searchString"  required />
+			<input type="submit" value="검색" class="btn btn-outline-secondary btn-sm" />
+		</form>
+	</div>	
+	<!--  -->	
 	
 </div>
 <p><br/></p>

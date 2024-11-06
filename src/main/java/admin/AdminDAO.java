@@ -203,7 +203,8 @@ public class AdminDAO {
 	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {
-			sql = "select count(idx) as totRecCnt from claim";
+			//sql = "select count(idx) as totRecCnt from claim";
+			sql = "select count(*) as totRecCnt from claim c, board b where c.partIdx=b.idx";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -215,6 +216,131 @@ public class AdminDAO {
 			rsClose();
 		}
 		return totRecCnt;
+	}
+	
+	// 선택된 게시물들 삭제하기(이때 선택 게시물이 신고된 글이라면 신고 글도 함께 삭제)
+	public void setBoardSelectDelete(int idx) {
+		try {
+			sql = "delete from board where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+//			pstmtClose();
+//			
+//			sql = "delete from claim where part='board' and partIdx=?";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, idx);
+//			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+	}
+	
+	// 선택한 게시물 삭제 : 신고글만 삭제
+	public void setClaimSelectDelete(int idx) {
+		 try {
+			sql = "delete from Claim where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		 } catch (SQLException e) {
+				System.out.println("SQL 오류 : " + e.getMessage());
+			} finally {
+				pstmtClose();
+			}
+		}
+	
+	// 방명록 새글 갯수 확인
+	public int getNewGuestCnt() {
+		int newGuestCnt = 0;
+		try {
+			sql = "select count(*) as newGuestCnt from guest where datediff(visitDate, now()) = 0";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				newGuestCnt = rs.getInt("newGuestCnt");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return newGuestCnt;
+	}
+	
+	public int getNewBoardCnt() {
+		int newBoardCnt = 0;
+		try {
+			sql = "select count(*) as newBoardCnt from board where datediff(wDate, now()) = 0";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				newBoardCnt = rs.getInt("newBoardCnt");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return newBoardCnt;
+	}
+	
+	public int getNewClaimCnt() {
+		int newClaimCnt = 0;
+		try {
+			sql = "select count(*) as newClaimCnt from claim where datediff(claimDate, now()) = 0";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				newClaimCnt = rs.getInt("newClaimCnt");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return newClaimCnt;
+	}
+	
+	public int getNewJoinCnt() {
+		int newJoinCnt = 0;
+		try {
+			sql = "select count(*) as newJoinCnt from member where datediff(startDate, now()) = 0";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				newJoinCnt = rs.getInt("newJoinCnt");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return newJoinCnt;
+	}
+	
+	public int getNewUserDelCnt() {
+		int newUserDelCnt = 0;
+		try {
+			sql = "select count(*) as newUserDelCnt from member where  userDel='OK' and datediff(lastDate, now()) = 0";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				newUserDelCnt = rs.getInt("newUserDelCnt");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		}finally {
+			rsClose();
+		}
+		return newUserDelCnt;
 	}
 	
 	

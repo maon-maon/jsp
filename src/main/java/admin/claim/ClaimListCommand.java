@@ -33,7 +33,6 @@ public class ClaimListCommand implements AdminInterface {
 		int lastBlock = (totPage -1) / blockSize;
 		
 		
-		
 		//List<ClaimVO> vos = dao.getClaimList();
 		
 		request.setAttribute("vos", vos);

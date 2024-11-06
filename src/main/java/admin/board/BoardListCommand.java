@@ -1,18 +1,17 @@
-package board;
+package admin.board;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import member.MemberVO;
+import admin.AdminInterface;
+import board.BoardDAO;
+import board.BoardVO;
 
-public class BoardListCommand implements BoardInterface {
+public class BoardListCommand implements AdminInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,24 +23,11 @@ public class BoardListCommand implements BoardInterface {
 		int startIndexNo = (pag - 1) * pageSize;
 		int curScrStartNo = (totRecCnt - startIndexNo); 
 		List<BoardVO> vos = dao.getBoardList(startIndexNo, pageSize); // 시작인덱스넘버와 페이지사이즈를 넘겨서 가져옴 //999를 넘기면 저체페이지 나옴= 일반회원은 전체 목록만 보면 됨
-		//System.out.println("BoardListComman pag: "+ pag+",pageSize: "+ pageSize);
 		
 		int blockSize = 3;
 		int curBlock = (pag -1) / blockSize;
 		int lastBlock = (totPage -1) /blockSize;
 		
-	//셀프테스트 : 작동확인 완료
-//		LocalDateTime date = LocalDateTime.now();
-//		String today = date.toString().substring(0, 10);
-//		String yesterday = date.minusHours(24).toString().substring(0, 19).replace("T", " ");
-//		//System.out.println("BoardInputOkComman today: "+today);
-//		//System.out.println("BoardInputOkComman yesterday: "+yesterday);
-//		
-//		request.setAttribute("today", today); 
-//		request.setAttribute("yesterday", yesterday); 
-//		//HttpSession session = request.getSession();
-//		//session.setAttribute("sToday", today);
-
 		
 		request.setAttribute("vos", vos); 
 		request.setAttribute("pag", pag); 
@@ -52,7 +38,7 @@ public class BoardListCommand implements BoardInterface {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
-		
+
 	}
 
 }

@@ -10,14 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.board.BoardListCommand;
+import admin.board.BoardSelectDeleteCommand;
 import admin.claim.BoardClaimInputCommand;
 import admin.claim.ClaimDeleteOkCommand;
 import admin.claim.ClaimListCommand;
+import admin.claim.ClaimSelectDeleteCommand;
 import admin.claim.ClaimViewCheckCommand;
 import admin.member.MemberClearCommand;
 import admin.member.MemberDeteilViewCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberListCommand;
+import member.MemberMainCommand;
 import study2.ajax.AjaxIdCheck0Command;
 import study2.ajax.AjaxIdCheck1Command;
 import study2.ajax.AjaxPointCheckCommand;
@@ -55,6 +59,8 @@ public class AdminController extends HttpServlet {
 			viewPage += "/adminLeft.jsp";
 		}
 		else if(com.equals("/AdminContent")) {
+			command = new AdminContentCommand();
+			command.execute(request, response);
 			viewPage += "/adminContent.jsp";
 		}
 		else if(com.equals("/MemberList")) {
@@ -77,11 +83,6 @@ public class AdminController extends HttpServlet {
 //			command.execute(request, response);
 //			viewPage += "/member/memberList.jsp";
 //		} //안 만드어쓰고 MemberList에 level을 넘김
-		else if(com.equals("/BoardList")) {
-			//command = new BoardListCommand();
-			//command.execute(request, response);
-			viewPage += "/board/boardList.jsp";
-		}
 		else if(com.equals("/MemberClear")) {
 			command = new MemberClearCommand();
 			command.execute(request, response);
@@ -102,8 +103,23 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		
-	
+	  //241106
+		else if(com.equals("/BoardList")) {
+			command = new BoardListCommand();
+			command.execute(request, response);
+			viewPage += "/board/boardList.jsp";
+		}
+		else if(com.equals("/BoardSelectDelete")) {
+			command = new BoardSelectDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ClaimSelectDelete")) {
+			command = new ClaimSelectDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+	  
 	
 	RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 	dispatcher.forward(request, response);

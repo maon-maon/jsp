@@ -36,3 +36,7 @@ insert into member values(default,'admin','asdf1234','관리맨','관리자','�
 alter table member auto_increment = 10;
 
 select max(point) as point, mid,name from member
+
+select count(*) as newJoinCnt from member where datediff(startDate, now()) = 0;
+
+select count(*) as newUserDelCnt from member where  userDel='OK' and datediff(lastDate, now()) = 0;

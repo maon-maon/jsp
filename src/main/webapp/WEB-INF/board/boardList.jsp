@@ -19,6 +19,10 @@
 	function cursorMove() {
 		document.getElementById("searchString").focus();
 	}
+	
+	function contentView(content) {
+    	$("#myModal #modalContent").html(content);
+  }
 </script>
 </head>
 <body>
@@ -60,12 +64,15 @@
 						<c:if test="${vo.claim != 'NO' && sMid == vo.mid && sLevel == 0}"><a href="javascript:alert('신고된 글입니다');">${vo.title}</c:if> 
 						<%-- <c:if test="${vo.date_diff == 0}"><img src="${ctp}/images/new.gif" /></c:if> --%>
 						<c:if test="${vo.time_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+						<c:if test="${vo.replyCnt != 0}">(${vo.replyCnt})</c:if>
 					</td>
-					<td>${vo.nickName}</td>
+					<td><a href="#" onclick='contentView("${vo.content}")' data-toggle="modal" data-target="#myModal">${vo.nickName}</a></td>
+					<%-- <td><a href="#">${vo.nickName}</a></td> --%>
 					<td>
-					<c:if test="${vo.time_diff <= 24 && vo.date_diff == 0}">${fn:substring(vo.wDate,10,19)} ①</c:if>
+					 ${vo.time_diff > 24 ? fn:substring(vo.wDate,0,10) : vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,19)}
+					<%-- <c:if test="${vo.time_diff <= 24 && vo.date_diff == 0}">${fn:substring(vo.wDate,10,19)} ①</c:if>
 					<c:if test="${vo.time_diff <= 24 && vo.date_diff != 0}">${fn:substring(vo.wDate,0,19)} ②</c:if>
-					<c:if test="${vo.time_diff > 24 && vo.date_diff < 0}">${fn:substring(vo.wDate,0,10)} ③</c:if>
+					<c:if test="${vo.time_diff > 24 && vo.date_diff < 0}">${fn:substring(vo.wDate,0,10)} ③</c:if> --%>
 					
 					<!-- 작동 확인 완료 -->
 					<%-- <c:if test="${fn:substring(vo.wDate,0,19) > yesterday }">${fn:substring(vo.wDate,10,19)} ①</c:if>
@@ -118,8 +125,27 @@
 	</form>
 </div>	
 <!--  -->	
-	
-	
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">글내용</h3>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <span id="modalContent"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- The Modal -->
+
+
 <p><br/></p>
   <jsp:include page="/include/footer.jsp"/>
 </body>
