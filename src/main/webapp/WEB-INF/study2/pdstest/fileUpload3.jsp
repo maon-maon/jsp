@@ -30,7 +30,7 @@
 				fName = document.getElementById("file").files[i].name; //name:예약어= 파일의 이름
 				ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
 				if(ext != 'jpg' && ext != 'gif' && ext != 'png' && ext != 'hwp' && ext != 'zip' && ext != 'ppt' && ext != 'pptx' && ext != 'xlsx' && ext != 'txt' && ext != 'doc') {
-      		alert("업로드 가능한 파일은 'jpg/gif/png/hwp/zip/ppt/pptx/xlsx/txt/doc'만 가능합니다.")
+      		alert("업로드 가능한 파일은 'jpg/gif/png/hwp/zip/ppt/pptx/xlsx/txt/doc'만 가능합니다.");
       		return false;
       	}
 				fNames += fName + "/"; //객체 안에서 파일을 꺼내 하나의 파일명으로 묶음 작업을 수행 마지막에 /로 구분

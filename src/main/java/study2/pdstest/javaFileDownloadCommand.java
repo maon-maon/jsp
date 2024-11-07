@@ -40,7 +40,7 @@ public class javaFileDownloadCommand implements StudyInterface {
 		response.setHeader("Content-Disposition", "attachment;filename="+downloadName);
 		
 		//파일이동 : 서버=인풋스트림 / 클라이언트=아웃풋스트림
-		/* 서버-서버:인풋-아웃풋(복붙) , 서로 다른 컴퓨터(클라이언드) 서블릿인풋-서블릿아웃풋 으로 사용*/
+		/* 서버-서버:인풋-아웃풋(복붙) , 서로 다른 컴퓨터(클라이언드) 파일인풋-서블릿아웃풋 으로 사용*/
 		// 객체 2개 생성 
  		FileInputStream fis = new FileInputStream(file); // 파일을 넘길 준비
  		//FileOutputStream fos = null;

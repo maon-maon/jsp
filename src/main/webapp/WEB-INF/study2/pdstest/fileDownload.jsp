@@ -34,9 +34,7 @@
 	// 한개 파일 삭제 처리
 	function fileDelete(fileName) {
 		let ans = confirm("파일을 삭제하시겠습니까?");
-		if(ans) {
-		
-		}
+		if(!ans) return false;
 		
 		$.ajax({
 			type : "post",
@@ -45,9 +43,9 @@
 			success: function(res) {
 				if(res != "0") {
 					alert("삭제완료");
-				location.reload();
+					location.reload();
 				}
-				else alert("!!!");
+				else alert("파일이 존재하지 않습니다");
 			},
 			error: function() {
 				alert("전송오류");

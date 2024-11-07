@@ -331,7 +331,7 @@
 					</td> 
 					<td class="text-left">${fn:replace(vo.content, newLine, "<br/>")}</td>
 					<td>${fn:substring(vo.wDate,0,10)}</td>
-					<td>${vo.hostIp}</td>
+					<td>${fn:substring(vo.hostIp, 0, 7)}.***.***</td>
 				</tr>
 				<tr >
 					<td colspan="4" class="m-0 p-0 " style="border: none;">

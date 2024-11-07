@@ -43,15 +43,15 @@ public class FileUpload1OkCommand implements StudyInterface {
 		 * 1.찾을 때는 원본명으로 찾으므로 서버장명을 같이 알고 있어야 찾을 수 있음.
 		 * 2.다운로드시 중복된 이름이 아닌 원본의 이름으로 받아야 함 */
 		
-		System.out.println("원본 파일명 : " + originalFileName);
-		System.out.println("서버에 저장된 파일명 : " + filesystemName);
-		System.out.println("서버에 저장된 파일경로 : " + realPath);
+//		System.out.println("원본 파일명 : " + originalFileName);
+//		System.out.println("서버에 저장된 파일명 : " + filesystemName);
+//		System.out.println("서버에 저장된 파일경로 : " + realPath);
 
 //		String nickName = request.getParameter("nickName");
 //		//받을 때 request로 받으면 닉네임 출력안됨
 //		System.out.println("nickName : " + nickName);
 		String nickName = multipartRequest.getParameter("nickName"); // 파일이1개라도 있음 무조건 multipartRequest
-		System.out.println("nickName : " + nickName);
+		//System.out.println("nickName : " + nickName);
 		
 		
 		

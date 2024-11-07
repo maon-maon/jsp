@@ -11,6 +11,12 @@
     'use strict';
     
     function fCheck() {
+			
+    	/* let fName = "";
+    	for(let i=1; i<=3) {
+    		fNames += document.getElementById("file"+i).value;
+    	} */
+    	    	
     	let fName1 = document.getElementById("file1").value;
     	let fName2 = document.getElementById("file2").value;
     	let fName3 = document.getElementById("file3").value;
