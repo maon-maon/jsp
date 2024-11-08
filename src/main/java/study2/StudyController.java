@@ -20,6 +20,7 @@ import study2.pdstest.FileUpload1OkCommand;
 import study2.pdstest.FileUpload2OkCommand;
 import study2.pdstest.FileUpload3OkCommand;
 import study2.pdstest.FileUpload4OkCommand;
+import study2.pdstest.FileUpload5Ok;
 import study2.pdstest.javaFileDownloadCommand;
 
 @SuppressWarnings("serial")
@@ -91,6 +92,12 @@ public class StudyController extends HttpServlet {
 		else if(com.equals("/FileUpload4")) {
 			viewPage += "/pdstest/fileUpload4.jsp";
 		}
+		else if(com.equals("/FileUpload5")) {
+			viewPage += "/pdstest/fileUpload5.jsp";
+		}
+		else if(com.equals("/FileUpload6")) {
+			viewPage += "/pdstest/fileUpload6.jsp";
+		}
 		else if(com.equals("/FileUpload1Ok")) {
 			command = new FileUpload1OkCommand();
 			command.execute(request, response);
@@ -111,6 +118,11 @@ public class StudyController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+//		else if(com.equals("/FileUpload5Ok")) {
+//			command = new FileUpload5OkCommand();
+//			command.execute(request, response);
+//			viewPage = "/include/message.jsp";
+//		} //디렉토리 방식으로 변경함
 		else if(com.equals("/FileDownload")) {
 			command = new FileDownloadCommand();
 			command.execute(request, response);

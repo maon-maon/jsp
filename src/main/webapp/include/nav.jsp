@@ -24,7 +24,7 @@
 	        <a class="nav-link" href="BoardList.bo">Board</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Pds</a>
+	        <a class="nav-link" href="PdsList.pds">Pds</a>
 	      </li>    
 	      <li class="nav-item">
 					<div class="dropdown mr-2">

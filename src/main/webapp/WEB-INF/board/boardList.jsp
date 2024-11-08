@@ -47,7 +47,7 @@
 		</tr>
 	</table>
 	<table class="table table-hover text-center">
-		<tr style="background-color: #eee">
+		<tr style="background-color: #E5E5E5">
 			<th>글번호</th>
 			<th>글제목(댓글)</th>
 			<th>글쓴이</th>

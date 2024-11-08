@@ -11,7 +11,7 @@
 <style>
 	th {
 		text-align: center;
-		background-color: #eee;
+		background-color: #E5E5E5;
 	}
 </style>
 <script>
