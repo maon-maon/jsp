@@ -128,7 +128,7 @@
         <td colspan="2" class="text-center">
           <input type="button" value="자료올리기" onclick="fCheck()" class="btn btn-success"/>
           <input type="reset" value="다시쓰기" class="btn btn-warning"/>
-          <input type="button" value="돌아가기" onclick="location.href='${ctp}/PdsList'" class="btn btn-success"/>
+          <input type="button" value="돌아가기" onclick="location.href='${ctp}/PdsList.pds?part=${part}&pag=${pag}&pageSize=${pageSize}'" class="btn btn-success"/>
         </td>
       </tr>
     </table>
@@ -136,6 +136,9 @@
     <input type="hidden" name="nickName" value="${sNickName}"/>
     <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}"/>
     <input type="hidden" name="fSize" />
+    <input type="hidden" name="part"  value="${part}"/>
+    <input type="hidden" name="pag"  value="${pag}"/>
+    <input type="hidden" name="pageSize"  value="${pageSize }"/>
   </form>
 </div>
 <p><br/></p>

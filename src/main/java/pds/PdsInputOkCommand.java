@@ -51,6 +51,11 @@ public class PdsInputOkCommand implements PdsInterface {
 		String openSw = multipartRequest.getParameter("openSw")==null ? "" : multipartRequest.getParameter("openSw");
 		String hostIp = multipartRequest.getParameter("hostIp")==null ? "" : multipartRequest.getParameter("hostIp");
 		
+		//241111
+		int pag = (request.getParameter("pag")==null || request.getParameter("pag").equals("")) ? 1 : Integer.parseInt(request.getParameter("pag")); 
+		int pageSize = (request.getParameter("pageSize")==null || request.getParameter("pageSize").equals("")) ? 5 : Integer.parseInt(request.getParameter("pageSize"));
+			
+		
 		PdsVO vo = new PdsVO();
 		vo.setMid(mid);
 		vo.setNickName(nickName);
@@ -68,12 +73,13 @@ public class PdsInputOkCommand implements PdsInterface {
 		
 		if(res != 0) {
 			request.setAttribute("message", "자료실에 자료가 업로드 되었습니다.");
-			request.setAttribute("url", "PdsList.pds");
+			request.setAttribute("url", "PdsList.pds?part="+part+"&pag="+pag+"&pageSize="+pageSize);
 		}
 		else {
 			request.setAttribute("message", "업로드 실패~~");
-			request.setAttribute("url", "PdsInput.pds");
+			request.setAttribute("url", "PdsInput.pds?part="+part+"&pag="+pag+"&pageSize="+pageSize);
 		}
+		
 	}
 
 }
