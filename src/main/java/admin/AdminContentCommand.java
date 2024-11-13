@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AdminContentCommand implements AdminInterface {
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 
 		AdminDAO dao = new AdminDAO();
 		
@@ -28,6 +28,6 @@ public class AdminContentCommand implements AdminInterface {
 		request.setAttribute("newClaimCnt", newClaimCnt);
 		request.setAttribute("newJoinCnt", newJoinCnt);
 		request.setAttribute("newUserDelCnt", newUserDelCnt);
+		 */
 	}
-
 }

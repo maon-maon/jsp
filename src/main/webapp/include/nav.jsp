@@ -42,6 +42,7 @@
 				      <a class="dropdown-item" href="PassCheckForm.st">암호화 연습</a> 
 				      <a class="dropdown-item" href="AjaxTest.st">AJAX 연습</a> 
 				      <a class="dropdown-item" href="FileUpload.st">File업로드 연습</a> 
+				      <a class="dropdown-item" href="Calendar.st">인터넷 달력</a> 
 				    </div>
 				  </div>
 	      </li>
@@ -58,7 +59,7 @@
 				      <c:if test="${sLevel > 1 || sLevel == 0}">
 					      <a class="dropdown-item" href="MemberList.mem">회원리스트</a>
 					      <a class="dropdown-item" href="">쪽지보내기</a>
-					      <a class="dropdown-item" href="">일정관리</a>
+					      <a class="dropdown-item" href="Schedule.sc">일정관리</a>
 				      </c:if>
 				      <a class="dropdown-item" href="">포인트 사용 내역</a>
 				      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="AdminMain.ad">관리자메뉴</a></c:if>

@@ -15,19 +15,21 @@ import admin.board.BoardSelectDeleteCommand;
 import admin.claim.BoardClaimInputCommand;
 import admin.claim.ClaimDeleteOkCommand;
 import admin.claim.ClaimListCommand;
+import admin.claim.ClaimSelectDeleteCommand;
 import admin.claim.ClaimViewCheckCommand;
-/*import admin.member.MemberDeleteOkCommand;
-import admin.member.MemberDetailViewCommand;*/
+import admin.member.MemberClearCommand;
+import admin.member.MemberDeteilViewCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberListCommand;
-import admin.review.ReviewDeleteCommand;
-import admin.review.ReviewInputOkCommand;
-import admin.review.ReviewReplyDeleteCommand;
-import admin.review.ReviewReplyInputOkCommand;
+import member.MemberMainCommand;
+import study2.ajax.AjaxIdCheck0Command;
+import study2.ajax.AjaxIdCheck1Command;
+import study2.ajax.AjaxPointCheckCommand;
+import study2.password.PassCheckOkCommand;
 
 @SuppressWarnings("serial")
-@WebServlet("*.ad")
-public class AdminController extends HttpServlet {
+//@WebServlet("*.ad")
+public class AdminController11_11 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminInterface command = null;
@@ -36,36 +38,16 @@ public class AdminController extends HttpServlet {
 		String com = request.getRequestURI();
 		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
-		// 인증처리.....(spring에서는 aop의 개념)
+		// 인증처리...(spring에서는 aop의 개념)
 		HttpSession session = request.getSession();
-		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");
+	  int level = session.getAttribute("sLevel")==null ? 999 : (int)session.getAttribute("sLevel");
 		
-		if(com.equals("/BoardClaimInput")) {
-			command = new BoardClaimInputCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(com.equals("/ReviewInputOk")) {
-			command = new ReviewInputOkCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(com.equals("/ReviewDelete")) {
-			command = new ReviewDeleteCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(com.equals("/ReviewReplyInputOk")) {
-			command = new ReviewReplyInputOkCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(com.equals("/ReviewReplyDelete")) {
-			command = new ReviewReplyDeleteCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(level != 0) {
+	  if(com.equals("/BoardClaimInput")) {
+	  	command = new BoardClaimInputCommand();
+	  	command.execute(request, response);
+	  	return;
+	  }
+	  else if(level != 0) { 
 			request.setAttribute("message", "로그인후 사용하세요");
 			request.setAttribute("url", "/MemberLogin.mem");
 			viewPage = "/include/message.jsp";
@@ -77,6 +59,8 @@ public class AdminController extends HttpServlet {
 			viewPage += "/adminLeft.jsp";
 		}
 		else if(com.equals("/AdminContent")) {
+			command = new AdminContentCommand();
+			command.execute(request, response);
 			viewPage += "/adminContent.jsp";
 		}
 		else if(com.equals("/MemberList")) {
@@ -89,18 +73,21 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		/*
-		else if(com.equals("/MemberDetailView")) {
-			command = new MemberDetailViewCommand();
+		else if(com.equals("/MemberDeteilView")) {
+			command = new MemberDeteilViewCommand();
 			command.execute(request, response);
-			viewPage += "/member/memberDetailView.jsp";
+			viewPage += "/member/memberDeteilView.jsp";
 		}
-		else if(com.equals("/MemberDeleteOk")) {
-			command = new MemberDeleteOkCommand();
+//		else if(com.equals("/MemberLevelViewCheck")) {
+//			command = new Memb erLeve lViewCheckC ommand();
+//			command.execute(request, response);
+//			viewPage += "/member/memberList.jsp";
+//		} //안 만드어쓰고 MemberList에 level을 넘김
+		else if(com.equals("/MemberClear")) {
+			command = new MemberClearCommand();
 			command.execute(request, response);
-			return;
+			viewPage = "/include/message.jsp";
 		}
-		*/
 		else if(com.equals("/ClaimList")) {
 			command = new ClaimListCommand();
 			command.execute(request, response);
@@ -116,6 +103,7 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+	  //241106
 		else if(com.equals("/BoardList")) {
 			command = new BoardListCommand();
 			command.execute(request, response);
@@ -126,8 +114,14 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+		else if(com.equals("/ClaimSelectDelete")) {
+			command = new ClaimSelectDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+	  
+	
+	RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+	dispatcher.forward(request, response);
 	}
 }

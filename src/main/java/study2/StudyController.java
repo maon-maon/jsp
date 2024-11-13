@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import study2.ajax.AjaxIdCheck0Command;
 import study2.ajax.AjaxIdCheck1Command;
 import study2.ajax.AjaxPointCheckCommand;
+import study2.calendar.CalendarCommand;
 import study2.password.PassCheckOkCommand;
 import study2.pdstest.FileDeleteCommand;
 import study2.pdstest.FileDownloadCommand;
@@ -137,6 +138,11 @@ public class StudyController extends HttpServlet {
 			command = new javaFileDownloadCommand();
 			command.execute(request, response);
 			return; //다운로드는 ajax아니더라도 원래 페이지에서 끝남
+		}
+		else if(com.equals("/Calendar")) {
+			command = new CalendarCommand();
+			command.execute(request, response);
+			viewPage += "/calendar/calendar.jsp";
 		}
 		
 		

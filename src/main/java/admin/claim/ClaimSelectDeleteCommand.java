@@ -21,7 +21,7 @@ public class ClaimSelectDeleteCommand implements AdminInterface {
 		
 		String res = "0";
 		for(String idxSelect : idxSelectArrays) {
-			dao.setClaimSelectDelete(Integer.parseInt(idxSelect));
+			//dao.setClaimSelectDelete(Integer.parseInt(idxSelect));
 			res = "1";
 		}
 		
