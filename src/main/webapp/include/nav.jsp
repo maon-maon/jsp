@@ -58,7 +58,7 @@
 				      <a class="dropdown-item" href="javascript:memberDelete()">회원탈퇴</a> 
 				      <c:if test="${sLevel > 1 || sLevel == 0}">
 					      <a class="dropdown-item" href="MemberList.mem">회원리스트</a>
-					      <a class="dropdown-item" href="">쪽지보내기</a>
+					      <a class="dropdown-item" href="MemberMessage.msg">메세지 보내기</a>
 					      <a class="dropdown-item" href="Schedule.sc">일정관리</a>
 				      </c:if>
 				      <a class="dropdown-item" href="">포인트 사용 내역</a>

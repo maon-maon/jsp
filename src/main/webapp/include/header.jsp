@@ -3,8 +3,6 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gugi&family=Nanum+Gothic+Coding:wght@700&family=Sunflower&display=swap" rel="stylesheet">
-<div class="jumbotron text-center" style="margin-bottom:0; height:170px; margin:0px; line-height: 30px; padding-top: 40px;  font-family: 'Nanum Gothic Coding', serif;" >
-  <h2>House52의 study room No.52</h2>
-  <p>(현 웹사이트는 반응형으로 제작되었습니다.)</p> 
+<div class="jumbotron text-center" style="margin-bottom:0; height:10%; margin:0px; line-height: 30px; padding-top: 40px" >
+  <p>{About_Me}</p>
 </div>

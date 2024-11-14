@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.GetConn22;
+import memberMessage.MemberMessageVO;
 import common.GetConn;
 
 public class MemberDAO {
@@ -190,11 +191,16 @@ public class MemberDAO {
 			//sql = "select * from member order by idx desc limit ? ,?";
 			//sql = "select *, datediff(now(), lastDate) as elapesed_date from member order by idx desc limit ? ,?";
 			//241101
-			if(level == 999) {
+			if(level == 999) {//전체회원 모두보기(페이징처리)
 				sql = "select *, datediff(now(), lastDate) as elapesed_date from member order by idx desc limit ? ,?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, startIndexNo);
 				pstmt.setInt(2, pageSize);
+			}
+			//241113
+			else if(level == 888) {//전체회원 모두보기 (단, 탈퇴회원(level=99)은 제외시킨다)
+				sql = "select * from member where level!=99 order by nickName";
+				pstmt = conn.prepareStatement(sql);
 			}
 			else {
 				sql = "select *, datediff(now(), lastDate) as elapesed_date from member where level=? order by idx desc limit ? ,?";
@@ -227,7 +233,7 @@ public class MemberDAO {
 				vo.setTodayCnt(rs.getInt("todayCnt"));
 				vo.setStartDate(rs.getString("startDate"));
 				vo.setLastDate(rs.getString("lastDate"));
-				vo.setElapesed_date(rs.getInt("elapesed_date"));
+				if(level != 888) vo.setElapesed_date(rs.getInt("elapesed_date"));
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -411,6 +417,66 @@ public class MemberDAO {
 			pstmtClose();
 		}	
 		//System.out.println("setMemberClea res: "+res);
+		return res;
+	}
+	
+	// 아이디로 검색리스트
+	public ArrayList<MemberVO> getMemberMidList(String mid) {
+		 ArrayList<MemberVO> vos = new  ArrayList<MemberVO>();
+		try {
+			sql = "select * from member where mid like ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+mid+"%");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new MemberVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setName(rs.getString("name"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setTel(rs.getString("tel"));
+				vo.setAddress(rs.getString("address"));
+				vo.setEmail(rs.getString("email"));
+				vo.setContent(rs.getString("content"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setLevel(rs.getInt("level"));
+				vo.setUserInfo(rs.getString("userInfo"));
+				vo.setUserDel(rs.getString("userDel"));
+				vo.setPoint(rs.getInt("point"));
+				vo.setVisitCnt(rs.getInt("visitCnt"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setLastDate(rs.getString("lastDate"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+			rsClose();
+		}	
+		return vos;
+	}
+	
+	//메세지 내용 저장
+	public int setMemberMessageInput(MemberMessageVO vo) {
+		int res = 0;
+		try {
+			 sql = "insert into memberMessage values(default, ?,?,? ,default)";
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1,vo.getSenderId());
+			 pstmt.setString(2,vo.getReceiverId());
+			 pstmt.setString(3,vo.getContent());
+			 res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+				System.out.println("SQL 오류: "+e.getMessage());
+		} finally {
+				pstmtClose();
+		}	
 		return res;
 	}
 	
