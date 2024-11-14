@@ -2,7 +2,7 @@ package common;
 
 import java.util.Calendar;
 
-public class javaGroupProcess {
+public class JavaGroupProcess {
 	
 	
 	public String getTimeBasedFileName() {

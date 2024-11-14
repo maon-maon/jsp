@@ -15,19 +15,17 @@ public class FileDeleteCommand implements StudyInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileName = request.getParameter("fileName")==null ? "" : request.getParameter("fileName");
 		
-		String realPath = request.getServletContext().getRealPath("/images/pdstest/"); // /하나라도 없으면 오류발생
+		String realPath = request.getServletContext().getRealPath("/images/pdstest/");
 		
-		File file =  new File(realPath + fileName);
+		File file = new File(realPath + fileName);
 		
 		String res = "0";
 		if(file.exists()) {
-			file.delete(); // 파일삭제 명령어
+			file.delete();
 			res = "1";
 		}
 		
-		
 		response.getWriter().write(res);
-		
 	}
 
 }

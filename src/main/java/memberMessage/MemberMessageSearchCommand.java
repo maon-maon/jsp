@@ -10,15 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import member.MemberDAO;
 import member.MemberVO;
 
-public class MemberMassageSeachCommand implements MemberMessageInterface {
+public class MemberMessageSearchCommand implements MemberMessageInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String msgFlag = request.getParameter("msgFlag")==null ? "" : request.getParameter("msgFlag");
-
+		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
+		
 		MemberMessageDAO dao = new MemberMessageDAO();
-		ArrayList<MemberMessageVO> messageVos = dao.getMemberMassageSeach(msgFlag,mid);
+		ArrayList<MemberMessageVO> messageVos = dao.getMemberMessageSearch(msgFlag, mid);
+		
 		
 		MemberDAO memberDao = new MemberDAO();
 		ArrayList<MemberVO> vos = memberDao.getMemberList(0, 0, 888);
@@ -26,7 +27,6 @@ public class MemberMassageSeachCommand implements MemberMessageInterface {
 		request.setAttribute("vos", vos);
 		request.setAttribute("messageVos", messageVos);
 		request.setAttribute("msgFlag", msgFlag);
-		
 	}
 
 }

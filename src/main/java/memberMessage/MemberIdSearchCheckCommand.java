@@ -18,7 +18,7 @@ public class MemberIdSearchCheckCommand implements MemberMessageInterface {
 		
 		MemberDAO dao = new MemberDAO();
 		
-		ArrayList<MemberVO> vos = dao.getMemberMidList(mid); 
+		ArrayList<MemberVO> vos = dao.getMemberMidList(mid);
 		
 		request.setAttribute("vos", vos);
 		request.setAttribute("mid", mid);

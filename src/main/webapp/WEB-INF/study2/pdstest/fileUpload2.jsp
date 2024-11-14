@@ -11,12 +11,6 @@
     'use strict';
     
     function fCheck() {
-			
-    	/* let fName = "";
-    	for(let i=1; i<=3) {
-    		fNames += document.getElementById("file"+i).value;
-    	} */
-    	    	
     	let fName1 = document.getElementById("file1").value;
     	let fName2 = document.getElementById("file2").value;
     	let fName3 = document.getElementById("file3").value;
@@ -58,16 +52,13 @@
 <div class="container">
   <h2>파일 업로드 연습(멀티파일처리)</h2>
   <hr/>
-  <!-- enctyp e:파일사용시 무조건 필요 : encty pe="mult ipart/fo rm-d ata"예약어임 -->
-	<!-- ht tp통신(헤더를통해) 가지만 multi part객체가 받아줌 -->
-	<!-- 외부서버접속시 저장소 필요 -->
   <form name="myform" method="post" action="FileUpload2Ok.st" enctype="multipart/form-data">
     파일명 :
     <input type="file" name="fName1" id="file1" class="form-control-file border mb-2" />
     <input type="file" name="fName2" id="file2" class="form-control-file border mb-2" />
     <input type="file" name="fName3" id="file3" class="form-control-file border mb-2" />
     <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>
-    <input type="hidden" name="nickName" value="${sNickName}" /><!-- 가입시폼에 이 부분이 있어야함 -->
+    <input type="hidden" name="nickName" value="${sNickName}" />
   </form>
   <hr/>
   <div class="row">

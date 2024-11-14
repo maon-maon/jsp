@@ -43,6 +43,8 @@
 				      <a class="dropdown-item" href="AjaxTest.st">AJAX 연습</a> 
 				      <a class="dropdown-item" href="FileUpload.st">File업로드 연습</a> 
 				      <a class="dropdown-item" href="Calendar.st">인터넷 달력</a> 
+				      <a class="dropdown-item" href="UuidForm.st">UUID 학습</a> 
+				      <a class="dropdown-item" href="PhotoView.st">그림보기 학습</a> 
 				    </div>
 				  </div>
 	      </li>

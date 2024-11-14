@@ -1,4 +1,4 @@
-package study2.pdstest;
+package study2.pdstest2;
 
 import java.io.IOException;
 

@@ -16,8 +16,8 @@ import admin.claim.BoardClaimInputCommand;
 import admin.claim.ClaimDeleteOkCommand;
 import admin.claim.ClaimListCommand;
 import admin.claim.ClaimViewCheckCommand;
-/*import admin.member.MemberDeleteOkCommand;
-import admin.member.MemberDetailViewCommand;*/
+//import admin.member.MemberDeleteOkCommand;
+//import admin.member.MemberDetailViewCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberListCommand;
 import admin.review.ReviewDeleteCommand;
@@ -36,7 +36,6 @@ public class MemberMessageController extends HttpServlet {
 		String com = request.getRequestURI();
 		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
-		// 인증처리.....(spring에서는 aop의 개념)
 		HttpSession session = request.getSession();
 		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");
 		
@@ -60,17 +59,16 @@ public class MemberMessageController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		else if(com.equals("/MemberMassageSeach")) {
-			command = new MemberMassageSeachCommand();
+		else if(com.equals("/MemberMessageSearch")) {
+			command = new MemberMessageSearchCommand();
 			command.execute(request, response);
 			viewPage += "/memberMessage.jsp";
 		}
-		else if(com.equals("/MemberMessageDeleteOk")) {
-			command = new MemberMessageDeleteOkCommand();
+		else if(com.equals("/MessageDeleteOk")) {
+			command = new MessageDeleteOkCommand();
 			command.execute(request, response);
 			return;
 		}
-		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

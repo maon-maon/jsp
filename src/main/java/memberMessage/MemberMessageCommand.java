@@ -15,18 +15,20 @@ public class MemberMessageCommand implements MemberMessageInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String senderId = request.getParameter("senderId")==null ? "" : request.getParameter("senderId");
+		
 		MemberDAO dao = new MemberDAO();
 		ArrayList<MemberVO> vos = dao.getMemberList(0, 0, 888);
-
-		HttpSession session = request.getSession();
-		String mid = (String)session.getAttribute("sMid");
 		
+		HttpSession session = request.getSession();
+		String mid = (String) session.getAttribute("sMid");
 		MemberMessageDAO messageDao = new MemberMessageDAO();
-		ArrayList<MemberMessageVO> messageVos = messageDao.getMemberMassageSeach("r",mid);
+		ArrayList<MemberMessageVO> messageVos = messageDao.getMemberMessageSearch("r", mid);
 		
 		request.setAttribute("vos", vos);
 		request.setAttribute("messageVos", messageVos);
 		request.setAttribute("msgFlag", "r");
+		request.setAttribute("senderId", senderId);
 	}
 
 }

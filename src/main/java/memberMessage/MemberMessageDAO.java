@@ -355,40 +355,59 @@ public class MemberMessageDAO {
 		}
 		return res;
 	}
-	
-	// 메세지 검색
-	public ArrayList<MemberMessageVO> getMemberMassageSeach(String msgFlag, String mid) {
-		ArrayList<MemberMessageVO> messageVos = new ArrayList<MemberMessageVO>();
+
+	// 메세지 내용 저장하기
+	public int setMemberMessageInput(MemberMessageVO vo) {
+		int res = 0;
+		try {
+			sql = "insert into memberMessage values (default, ?, ?, ?, default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getSenderId());
+			pstmt.setString(2, vo.getReceiverId());
+			pstmt.setString(3, vo.getContent());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();			
+		}
+		return res;
+	}
+
+	// 보낸메시지/받은메세지 검색처리
+	public ArrayList<MemberMessageVO> getMemberMessageSearch(String msgFlag, String mid) {
+		ArrayList<MemberMessageVO> vos = new ArrayList<MemberMessageVO>();
 		try {
 			if(msgFlag.equals("r")) {
-				sql = "select * from memberMessage where receiverId=? order by idx desc";
+				sql = "select * from memberMessage where receiverId = ? order by idx desc";
 			}
-			else if(msgFlag.equals("s")) {
-				sql = "select * from memberMessage where senderId=? order by idx desc";
+			else {
+				sql = "select * from memberMessage where senderId = ? order by idx desc";				
 			}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			rs = pstmt.executeQuery();
 			
-			while (rs.next()) {
+			while(rs.next()) {
 				MemberMessageVO vo = new MemberMessageVO();
 				vo.setIdx(rs.getInt("idx"));
 				vo.setSenderId(rs.getString("senderId"));
 				vo.setReceiverId(rs.getString("receiverId"));
 				vo.setContent(rs.getString("content"));
 				vo.setMsgDate(rs.getString("msgDate"));
-				messageVos.add(vo);
+				
+				vos.add(vo);
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			rsClose();			
 		}
-		return messageVos;
+		return vos;
 	}
 
-	// 받은 메세지 삭제
-	public int setMemberMessageDeleteOk(int idx) {
+	// 메세지 삭제하기
+	public int setMessageDeleteOk(int idx) {
 		int res = 0;
 		try {
 			sql = "delete from memberMessage where idx = ?";
