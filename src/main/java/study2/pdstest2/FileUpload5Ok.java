@@ -25,7 +25,7 @@ import study2.StudyInterface;
 )
 /* (안에 인자 넣어서 사용) */
 
-@WebServlet("/FileUpload5Ok")
+//@WebServlet("/FileUpload5Ok")
 public class FileUpload5Ok extends HttpServlet {
 	
 	@Override

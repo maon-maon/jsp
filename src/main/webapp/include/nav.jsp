@@ -41,6 +41,7 @@
 				      <a class="dropdown-item" href="${ctp}/study2/database/DbList">Database 연습</a> 
 				      <a class="dropdown-item" href="PassCheckForm.st">암호화 연습</a> 
 				      <a class="dropdown-item" href="AjaxTest.st">AJAX 연습</a> 
+				      <a class="dropdown-item" href="AjaxTest2.st">AJAX 응용</a> 
 				      <a class="dropdown-item" href="FileUpload.st">File업로드 연습</a> 
 				      <a class="dropdown-item" href="Calendar.st">인터넷 달력</a> 
 				      <a class="dropdown-item" href="UuidForm.st">UUID 학습</a> 

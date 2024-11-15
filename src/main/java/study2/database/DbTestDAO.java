@@ -30,7 +30,7 @@ public class DbTestDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			//System.out.println("드라이버 검색 성공");
 			conn = DriverManager.getConnection(url, user, password);
-			System.out.println("Database 연결 성공");
+			//System.out.println("Database 연결 성공");
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 검색 실패" + e.getMessage());
 			//e.printStackTrace();
@@ -190,6 +190,59 @@ public class DbTestDAO {
 			pstmtClose();
 		}
 		return res;
+	}
+
+	// 아이디로 검색하여 vo자료 넘겨주기
+	public DbTestVO getIdSearch(String mid) {
+		try {
+			sql = "select * from hoewon3 where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid); //네임 변수에서 1개만 검색
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new DbTestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vo.setGender(rs.getString("gender"));
+				vo.setAddress(rs.getString("address"));
+			} 
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
+
+	// 아이디가 비슷한 자료 모두 검색해서 가져오기
+	public ArrayList<DbTestVO> getIdSameSearch(String mid) {
+		ArrayList<DbTestVO> vos = new ArrayList<DbTestVO>();
+		try {
+			sql = "select * from hoewon3 where mid like ? order by mid";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+mid+"%");			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new DbTestVO();
+				vo.setIdx(rs.getInt("idx")); 
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vo.setGender(rs.getString("gender"));
+				vo.setAddress(rs.getString("address"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 	
 	

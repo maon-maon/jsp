@@ -22,7 +22,7 @@ import common.JavaGroupProcess;
 	maxRequestSize = 1024 * 1024 * 20  // 한번에 전송할 수 있는 최대용량 //여러개는 리퀘스트에서 가져옴 
 )
 @SuppressWarnings("serial")
-@WebServlet("/PhotoViewAjax")
+//@WebServlet("/PhotoViewAjax")
 public class PhotoViewAjax extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -67,6 +67,7 @@ public class StudyController extends HttpServlet {
 		else if(com.equals("/AjaxTest")) {
 			viewPage += "/ajax/ajaxTest.jsp";
 		}
+		
 		else if(com.equals("/AjaxIdCheck0")) {
 			command = new AjaxIdCheck0Command();
 			command.execute(request, response);
@@ -82,6 +83,9 @@ public class StudyController extends HttpServlet {
 			command = new AjaxPointCheckCommand();
 			command.execute(request, response);
 			return; //비동기식은 여기서 끊어야 함
+		}
+		else if(com.equals("/AjaxTest2")) {
+			viewPage += "/ajax/ajaxTest2.jsp";
 		}
 		else if(com.equals("/FileUpload")) {
 			viewPage += "/pdstest/fileUpload.jsp";
