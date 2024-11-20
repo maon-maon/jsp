@@ -14,7 +14,7 @@
   	function imgCheck(input) {
 			/* if(input.files) { */
 			/* if(input.files[0]) { */
-			if(input.files[0] && input.files[0]) {
+			if(input.files && input.files[0]) {
 				//파일리더클래스 : 외부에서 들어오는 객체의 껍데기 생성
 				let reader = new FileReader();
 				reader.onload = function(e) { //콜백으로 확인 여기서 감ㄱ지되는 내용을

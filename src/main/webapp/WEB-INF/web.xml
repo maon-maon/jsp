@@ -79,6 +79,23 @@
 		<param-value>www.green.com</param-value>
   </context-param>
   
+  <!-- errorPage 설정 -->
+  <!-- <error-page>
+  	<error-code>400</error-code>
+  	<location>/errorMSG/errorMessage400.jsp</location>
+  </error-page>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/errorMSG/errorMessage404.jsp</location>
+  </error-page>
+  <error-page>
+  	<error-code>405</error-code>
+  	<location>/errorMSG/errorMessage405.jsp</location>
+  </error-page>
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/errorMSG/errorMessage500.jsp</location>
+  </error-page> -->
   
   <!-- Filter 처리(한글처리) --> <!-- 241021 -->
   <!-- <filter>

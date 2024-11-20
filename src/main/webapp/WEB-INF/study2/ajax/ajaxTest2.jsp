@@ -134,7 +134,7 @@
 			});
 		}
   	 
-    // vos객체를 j
+    // vos형식의 자료를 json형식으로 변환시켜 전달받아서 처리
     function idCheck5() {
     	let mid = myform.mid.value;
     	if(idCheck(mid) == "0") return false;
@@ -190,6 +190,23 @@
     		}
     	});
     }
+    // vos형식의 자료를 ViewPage로 출력후 출력된 내용을 전달받아 화면에 출력하기
+    function idCheck6() {
+    	let mid = myform.mid.value;
+    	if(idCheck(mid) == "0") return false;
+    	
+    	$.ajax({
+    		type : "get",
+    		url  : "AjaxIdCheck2_6.st",
+    		data : {mid : mid},
+    		success:function(res) {
+    			$("#demo2").html(res);
+    		},
+    		error : function() {
+    			alert("전송오류!");
+    		}
+    	});
+    }
   </script>
 </head>
 <body>
@@ -209,7 +226,8 @@
 								<input type="button" value="아이디검색2" onclick="idCheck2()" class="btn btn-primary" />
 								<input type="button" value="아이디검색3" onclick="idCheck3()" class="btn btn-secondary" />
 								<input type="button" value="아이디검색4(주로사용)" onclick="idCheck4()" class="btn btn-info" />
-								<input type="button" value="아이디검색5(실제사용)" onclick="idCheck5()" class="btn btn-warning" />
+								<input type="button" value="아이디검색5트랜젝션(실제사용)" onclick="idCheck5()" class="btn btn-warning" />
+								<input type="button" value="아이디검색리스트6트랜젝션(외부jsp)" onclick="idCheck6()" class="btn btn-outline-warning" />
 						</div>
 						<hr />
 						<div>
@@ -218,6 +236,7 @@
 							3. vo를 json방식으로 변환시켜서 전달받아서 처리<br/>
 							4. vos형식의 자료로 만들어서 json형식으로 변환시켜 전달받아서 처리<br/>
 							5. vos형식의 자료를 json형식으로 변환시켜 전달받아서 처리<br/>
+							6. vos형식의 자료를 json형식으로 변환시켜 전달받아서 처리<br/>
 						</div>						
 						<hr />
 						<div id="demo"></div>

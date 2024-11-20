@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import study2.ajax.AjaxIdCheck0Command;
 import study2.ajax.AjaxIdCheck1Command;
+import study2.ajax.AjaxIdCheck2_6Command;
 import study2.ajax.AjaxPointCheckCommand;
 import study2.calendar.CalendarCommand;
+import study2.errorPage.ErrorJSPCommand;
 import study2.password.PassCheckOkCommand;
 import study2.pdstest.FileDeleteCommand;
 import study2.pdstest.FileDownloadCommand;
@@ -86,6 +88,13 @@ public class StudyController extends HttpServlet {
 		}
 		else if(com.equals("/AjaxTest2")) {
 			viewPage += "/ajax/ajaxTest2.jsp";
+		}
+		else if(com.equals("/AjaxIdCheck2_6")) {
+			command = new AjaxIdCheck2_6Command();
+			command.execute(request, response);
+			//return;
+			//System.out.println("컨트롤러");
+			viewPage += "/ajax/ajaxTest2_6.jsp";
 		}
 		else if(com.equals("/FileUpload")) {
 			viewPage += "/pdstest/fileUpload.jsp";
@@ -192,6 +201,23 @@ public class StudyController extends HttpServlet {
 			command = new PhotoViewDeleteCommand();
 			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/ErrorMenu")) {
+			viewPage += "/error/errorMenu.jsp";
+		}
+		else if(com.equals("/ErrorJSP")) {
+			command = new ErrorJSPCommand();
+			command.execute(request, response);
+			viewPage += "/error/errorJSP.jsp";
+		}
+		else if(com.equals("/Error400")) {
+			String vo = request.getParameter("vo");
+			System.out.println("vo: "+vo);
+			viewPage += "/error/errorJSP.jsp";
+		}
+		else if(com.equals("/Error500")) {
+			System.out.println("5 / 0: "+(5/0));
+			viewPage += "/error/errorJSP.jsp";
 		}
 		
 	
